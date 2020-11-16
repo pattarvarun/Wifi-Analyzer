@@ -1,4 +1,4 @@
-package com.example.wifianalyzer.ui;
+package com.example.wifianalyzer;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,30 +6,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class DeviceListAdapter extends RecyclerView.Adapter<DeviceListAdapter.ViewHolder>{
-    List<Device> list;
+public class DeviceListAdapter extends RecyclerView.Adapter<com.example.trackingwifi.DeviceListAdapter.ViewHolder>{
+    List<com.example.trackingwifi.Device> list;
     private LayoutInflater mInflater;
-    public DeviceListAdapter(Context context, List<Device> list) {
+    public DeviceListAdapter(Context context, List<com.example.trackingwifi.Device> list) {
         this.mInflater = LayoutInflater.from(context);
         this.list = list;
     }
     @NonNull
     @Override
-    public DeviceListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public com.example.trackingwifi.DeviceListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.device_list, parent, false);
-        return new DeviceListAdapter.ViewHolder(view);
+        return new com.example.trackingwifi.DeviceListAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull DeviceListAdapter.ViewHolder holder, int position) {
-        Device device=list.get(position);
-        holder.ip.setText(device.getIp());
-        holder.name.setText(device.getDevice());
+    public void onBindViewHolder(@NonNull com.example.trackingwifi.DeviceListAdapter.ViewHolder holder, int position) {
+com.example.trackingwifi.Device device=list.get(position);
+holder.ip.setText(device.getIp());
+holder.name.setText(device.getDevice());
 
     }
 
@@ -56,4 +57,3 @@ public class DeviceListAdapter extends RecyclerView.Adapter<DeviceListAdapter.Vi
         }
     }
 }
-

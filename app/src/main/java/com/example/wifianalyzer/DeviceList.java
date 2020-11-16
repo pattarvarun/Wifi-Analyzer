@@ -1,36 +1,23 @@
-package com.example.wifianalyzer.ui;
+package com.example.wifianalyzer;
 
-import android.Manifest;
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
-import android.net.wifi.ScanResult;
-import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.net.wifi.p2p.WifiP2pManager;
-
-
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.trackingwifi.ui.frag2.ListwifiAdapter;
 
-import java.nio.channels.Channel;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,12 +26,12 @@ import static android.os.Looper.getMainLooper;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link DeviceList#newInstance} factory method to
+ * Use the {@link com.example.trackingwifi.DeviceList#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class DeviceList extends Fragment implements WifiP2pManager.PeerListListener, WifiP2pManager.ChannelListener {
     RecyclerView recyclerView;
-    List<Device> list=new ArrayList<>();
+    List<com.example.trackingwifi.Device> list=new ArrayList<>();
     WifiP2pManager manager;
     WifiP2pManager.Channel channel;
     IntentFilter intentFilter= new IntentFilter();
@@ -79,8 +66,8 @@ public class DeviceList extends Fragment implements WifiP2pManager.PeerListListe
      * @return A new instance of fragment DeviceList.
      */
     // TODO: Rename and change types and number of parameters
-    public static DeviceList newInstance(String param1, String param2) {
-        DeviceList fragment = new DeviceList();
+    public static com.example.trackingwifi.DeviceList newInstance(String param1, String param2) {
+        com.example.trackingwifi.DeviceList fragment = new com.example.trackingwifi.DeviceList();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -107,7 +94,7 @@ public class DeviceList extends Fragment implements WifiP2pManager.PeerListListe
     @Override
     public void onResume() {
         super.onResume();
-        //   Toast.makeText(getContext(), "No  found",Toast.LENGTH_LONG).show();
+     //   Toast.makeText(getContext(), "No  found",Toast.LENGTH_LONG).show();
 
         _broadcastReceiver = new WiFiDirectBroadcastReceiver(manager, channel, this, _peerListListener);
         getContext().registerReceiver(mWifiScanReceiver, intentFilter);
@@ -115,7 +102,7 @@ public class DeviceList extends Fragment implements WifiP2pManager.PeerListListe
     @Override
     public void onStart() {
         super.onStart();
-        Toast.makeText(getContext(), "On start",Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), "On start", Toast.LENGTH_LONG).show();
 
         _broadcastReceiver = new WiFiDirectBroadcastReceiver(manager, channel, this, _peerListListener);
         getContext().registerReceiver(mWifiScanReceiver, intentFilter);
@@ -142,7 +129,7 @@ public class DeviceList extends Fragment implements WifiP2pManager.PeerListListe
         manager = (WifiP2pManager) getContext().getSystemService(Context.WIFI_P2P_SERVICE);
         channel = manager.initialize(getContext(), getMainLooper(), this);
         if (channel==null){
-            Toast.makeText(getContext(), "channel nul",Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "channel nul", Toast.LENGTH_LONG).show();
 
         }
 
@@ -152,17 +139,17 @@ public class DeviceList extends Fragment implements WifiP2pManager.PeerListListe
 
                 for (WifiP2pDevice device : wifiP2pDeviceList.getDeviceList())
                 {
-                    Toast.makeText(getContext(),wifiP2pDeviceList.getDeviceList().size()+"jajajajaj",Toast.LENGTH_LONG).show();
-                    peers.add(device);
-                    list.add(new Device(device.primaryDeviceType,device.deviceName,device.deviceAddress));
+                    Toast.makeText(getContext(),wifiP2pDeviceList.getDeviceList().size()+"jajajajaj", Toast.LENGTH_LONG).show();
+peers.add(device);
+                    list.add(new com.example.trackingwifi.Device(device.primaryDeviceType,device.deviceName,device.deviceAddress));
 
                     if (device.deviceName.equals("ABC"))
-                        Toast.makeText(getContext(), "widi"+wifiP2pDeviceList.getDeviceList().size(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "widi"+wifiP2pDeviceList.getDeviceList().size(), Toast.LENGTH_LONG).show();
                     // device.deviceName
                 }
             }
         });
-        //  Toast.makeText(getContext(), "jaja"+list.get(0).getDevice(),Toast.LENGTH_LONG).show();
+      //  Toast.makeText(getContext(), "jaja"+list.get(0).getDevice(),Toast.LENGTH_LONG).show();
 
 
         deviceListAdapter=new DeviceListAdapter(getContext(),list);
@@ -170,7 +157,7 @@ public class DeviceList extends Fragment implements WifiP2pManager.PeerListListe
                 linearLayoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
         recyclerView.setAdapter(deviceListAdapter);
-        List<WifiP2pDevice> peers = new ArrayList<WifiP2pDevice>();
+         List<WifiP2pDevice> peers = new ArrayList<WifiP2pDevice>();
 
         return root;
     }
@@ -186,7 +173,7 @@ public class DeviceList extends Fragment implements WifiP2pManager.PeerListListe
 
         peers.clear();
         peers.addAll(peerList.getDeviceList());
-        Toast.makeText(getContext(),peerList.getDeviceList().size()+"jajajajaj",Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(),peerList.getDeviceList().size()+"jajajajaj", Toast.LENGTH_LONG).show();
 
         ((DeviceListAdapter) deviceListAdapter).notifyDataSetChanged();
         if (peers.size() == 0) {
@@ -199,4 +186,3 @@ public class DeviceList extends Fragment implements WifiP2pManager.PeerListListe
 
     }
 }
-

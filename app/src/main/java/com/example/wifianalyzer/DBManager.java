@@ -1,8 +1,6 @@
-package com.example.wifianalyzer.ui;
+package com.example.wifianalyzer;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -15,7 +13,7 @@ public class DBManager {
         this.context = c;
     }
 
-    public DBManager open() throws SQLException {
+    public com.example.trackingwifi.DBManager open() throws SQLException {
         this.dbHelper = new SampleSQLiteDBHelper(this.context);
         this.database = this.dbHelper.getWritableDatabase();
         return this;
@@ -26,3 +24,9 @@ public class DBManager {
     }
 
 
+
+
+
+
+
+}

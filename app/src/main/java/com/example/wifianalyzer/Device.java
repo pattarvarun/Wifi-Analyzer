@@ -1,4 +1,4 @@
-package com.example.wifianalyzer.ui;
+package com.example.wifianalyzer;
 
 public class Device {
     private String type_device,device,ip,mac,marque;
