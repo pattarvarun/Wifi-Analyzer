@@ -40,7 +40,7 @@
     <string name="privacy_close">
         <u>Back</u>
     </string>
-    <string name="app_name">Track Wifi</string>
+    <string name="app_name">Wifi-Analyzer NITK</string>
     <string name="title_activity_tab_activity">tab_activity</string>
     <string name="tab_text_1">Wifi Radar</string>
     <string name="tab_text_2">More informations</string>
