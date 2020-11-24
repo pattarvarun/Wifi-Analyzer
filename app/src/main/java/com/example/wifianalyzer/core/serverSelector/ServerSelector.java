@@ -4,8 +4,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
-import com.example.trackingwifi.core.config.SpeedtestConfig;
-import com.example.trackingwifi.core.ping.PingStream;
+import com.example.wifianalyzer.core.config.SpeedtestConfig;
+import com.example.wifianalyzer.core.ping.PingStream;
 
 public abstract class ServerSelector {
     private ArrayList<TestPoint> servers=new ArrayList<>();

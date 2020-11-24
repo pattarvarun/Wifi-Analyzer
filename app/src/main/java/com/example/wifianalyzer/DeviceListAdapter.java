@@ -12,23 +12,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class DeviceListAdapter extends RecyclerView.Adapter<com.example.trackingwifi.DeviceListAdapter.ViewHolder>{
-    List<com.example.trackingwifi.Device> list;
+public class DeviceListAdapter extends RecyclerView.Adapter<com.example.wifianalyzer.DeviceListAdapter.ViewHolder>{
+    List<com.example.wifianalyzer.Device> list;
     private LayoutInflater mInflater;
-    public DeviceListAdapter(Context context, List<com.example.trackingwifi.Device> list) {
+    public DeviceListAdapter(Context context, List<com.example.wifianalyzer.Device> list) {
         this.mInflater = LayoutInflater.from(context);
         this.list = list;
     }
     @NonNull
     @Override
-    public com.example.trackingwifi.DeviceListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public com.example.wifianalyzer.DeviceListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.device_list, parent, false);
-        return new com.example.trackingwifi.DeviceListAdapter.ViewHolder(view);
+        return new com.example.wifianalyzer.DeviceListAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull com.example.trackingwifi.DeviceListAdapter.ViewHolder holder, int position) {
-com.example.trackingwifi.Device device=list.get(position);
+    public void onBindViewHolder(@NonNull com.example.wifianalyzer.DeviceListAdapter.ViewHolder holder, int position) {
+com.example.wifianalyzer.Device device=list.get(position);
 holder.ip.setText(device.getIp());
 holder.name.setText(device.getDevice());
 

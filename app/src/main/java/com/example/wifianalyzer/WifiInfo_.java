@@ -11,8 +11,6 @@ public class WifiInfo_ {
         return drawable;
     }
 
-
-
     public int getWifi_speed() {
         return wifi_speed;
     }

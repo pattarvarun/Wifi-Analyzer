@@ -20,8 +20,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.trackingwifi.*;
-import com.example.trackingwifi.ui.MainActivity;
+import com.example.wifianalyzer.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,20 +47,17 @@ SpeedTestAdapter speedTestAdapter;
         View root= inflater.inflate(R.layout.speed_fragment, container, false);
 
 notest=root.findViewById(R.id.notest);
-        WifiManager wmgr = (WifiManager) getContext().getSystemService(Context.WIFI_SERVICE);
+        WifiManager wmgr = (WifiManager) getContext().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
       final String name= wmgr.getConnectionInfo().getSSID();
         namewifi=root.findViewById(R.id.wifi_name);
         recyclerView=root.findViewById(R.id.liste_tests);
         namewifi.setText(name);
 btn_start_speed=root.findViewById(R.id.btn_start_speed);
-btn_start_speed.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        Intent intent=new Intent().setClass(getContext(), com.example.trackingwifi.ui.MainActivity.class);
-        intent.putExtra("name_wifi",name);
-        startActivity(intent);
+btn_start_speed.setOnClickListener(v -> {
+    Intent intent=new Intent().setClass(getContext(), com.example.wifianalyzer.ui.MainActivity.class);
+    intent.putExtra("name_wifi",name);
+    startActivity(intent);
 
-    }
 });
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
         SQLiteDatabase database = new SampleSQLiteDBHelper(getContext()).getReadableDatabase();

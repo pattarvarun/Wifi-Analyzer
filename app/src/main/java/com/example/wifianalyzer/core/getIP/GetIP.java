@@ -3,9 +3,9 @@ package com.example.wifianalyzer.core.getIP;
 import java.io.BufferedReader;
 import java.util.HashMap;
 
-import com.example.trackingwifi.core.config.SpeedtestConfig;
-import com.example.trackingwifi.core.base.Connection;
-import com.example.trackingwifi.core.base.Utils;
+import com.example.wifianalyzer.core.config.SpeedtestConfig;
+import com.example.wifianalyzer.core.base.Connection;
+import com.example.wifianalyzer.core.base.Utils;
 
 public abstract class GetIP extends Thread{
     private Connection c;

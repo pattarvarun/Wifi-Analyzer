@@ -2,7 +2,7 @@ package com.example.wifianalyzer.core.ping;
 
 import java.io.InputStream;
 
-import com.example.trackingwifi.core.base.Connection;
+import com.example.wifianalyzer.core.base.Connection;
 
 public abstract class Pinger extends Thread{
     private Connection c;

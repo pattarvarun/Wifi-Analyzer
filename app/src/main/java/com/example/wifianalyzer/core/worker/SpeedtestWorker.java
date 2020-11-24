@@ -1,16 +1,16 @@
 package com.example.wifianalyzer.core.worker;
 
-import com.example.trackingwifi.core.base.Connection;
-import com.example.trackingwifi.core.base.Utils;
-import com.example.trackingwifi.core.config.SpeedtestConfig;
-import com.example.trackingwifi.core.config.TelemetryConfig;
-import com.example.trackingwifi.core.download.DownloadStream;
-import com.example.trackingwifi.core.getIP.GetIP;
-import com.example.trackingwifi.core.log.Logger;
-import com.example.trackingwifi.core.ping.PingStream;
-import com.example.trackingwifi.core.serverSelector.TestPoint;
-import com.example.trackingwifi.core.telemetry.Telemetry;
-import com.example.trackingwifi.core.upload.UploadStream;
+import com.example.wifianalyzer.core.base.Connection;
+import com.example.wifianalyzer.core.base.Utils;
+import com.example.wifianalyzer.core.config.SpeedtestConfig;
+import com.example.wifianalyzer.core.config.TelemetryConfig;
+import com.example.wifianalyzer.core.download.DownloadStream;
+import com.example.wifianalyzer.core.getIP.GetIP;
+import com.example.wifianalyzer.core.log.Logger;
+import com.example.wifianalyzer.core.ping.PingStream;
+import com.example.wifianalyzer.core.serverSelector.TestPoint;
+import com.example.wifianalyzer.core.telemetry.Telemetry;
+import com.example.wifianalyzer.core.upload.UploadStream;
 
 import org.json.JSONObject;
 

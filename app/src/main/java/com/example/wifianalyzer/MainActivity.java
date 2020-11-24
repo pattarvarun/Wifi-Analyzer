@@ -170,16 +170,16 @@ showDialog();
 });
 
 }
-        final WifiManager mWifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+        final WifiManager mWifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
          final BroadcastReceiver mWifiScanReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context c, Intent intent) {
-                Toast.makeText(com.example.trackingwifi.MainActivity.this,"kakaka", Toast.LENGTH_LONG).show();
+                Toast.makeText(com.example.wifianalyzer.MainActivity.this,"kakaka", Toast.LENGTH_LONG).show();
 
                 if (intent.getAction().equals(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION)) {
                     List<ScanResult> mScanResults = mWifiManager.getScanResults();
-                    Toast.makeText(com.example.trackingwifi.MainActivity.this,mScanResults.size()+"", Toast.LENGTH_LONG).show();
+                    Toast.makeText(com.example.wifianalyzer.MainActivity.this,mScanResults.size()+"", Toast.LENGTH_LONG).show();
 
                 }
             }
@@ -264,7 +264,7 @@ dialog.show();
     }
 
     private void updateGps(){
-        fusedLocationProviderClient= LocationServices.getFusedLocationProviderClient(com.example.trackingwifi.MainActivity.this);
+        fusedLocationProviderClient= LocationServices.getFusedLocationProviderClient(com.example.wifianalyzer.MainActivity.this);
     if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)== PackageManager.PERMISSION_GRANTED){
         fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this,new OnSuccessListener<Location>() {
             @Override
@@ -301,14 +301,14 @@ updateUIvalues(location);
     private void updateUIvalues(Location location) {
 
 
-        Geocoder geocoder=new Geocoder(com.example.trackingwifi.MainActivity.this);
+        Geocoder geocoder=new Geocoder(com.example.wifianalyzer.MainActivity.this);
         try{
            List<Address> list= geocoder.getFromLocation(location.getLatitude(),location.getLongitude(),1);
             adresse.setText(""+list.get(0).getAddressLine(0));
 
         }
         catch (Exception e){
-Toast.makeText(com.example.trackingwifi.MainActivity.this,"DOESNT WORK!", Toast.LENGTH_SHORT).show();
+Toast.makeText(com.example.wifianalyzer.MainActivity.this,"DOESNT WORK!", Toast.LENGTH_SHORT).show();
         }
     }
 

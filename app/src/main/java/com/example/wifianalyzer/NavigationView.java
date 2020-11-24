@@ -77,7 +77,7 @@ public class NavigationView extends View {
     }
     public void setFrameRate(int fps) { this.fps = fps; }
     public int getFrameRate() { return this.fps; };
-    public void setShowNetwork(boolean showNetwork, List<com.example.trackingwifi.Pos> list){
+    public void setShowNetwork(boolean showNetwork, List<com.example.wifianalyzer.Pos> list){
         this.showNetwork=showNetwork;
 
     }

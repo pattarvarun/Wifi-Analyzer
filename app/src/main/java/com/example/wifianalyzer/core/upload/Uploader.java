@@ -3,7 +3,7 @@ package com.example.wifianalyzer.core.upload;
 import java.io.OutputStream;
 import java.util.Random;
 
-import com.example.trackingwifi.core.base.Connection;
+import com.example.wifianalyzer.core.base.Connection;
 
 public abstract class Uploader extends Thread{
     private Connection c;

@@ -10,8 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.trackingwifi.R;
-import com.example.trackingwifi.WifiInfo_;
+import com.example.wifianalyzer.R;
+import com.example.wifianalyzer.WifiInfo_;
 
 import java.util.List;
 
@@ -19,10 +19,12 @@ public class ListwifiAdapter extends RecyclerView.Adapter<ListwifiAdapter.ViewHo
     private List<WifiInfo_> list;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
-    public ListwifiAdapter(Context context, List<WifiInfo_> list){
+
+    public ListwifiAdapter(Context context, List<WifiInfo_> list) {
         this.mInflater = LayoutInflater.from(context);
         this.list = list;
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -33,11 +35,11 @@ public class ListwifiAdapter extends RecyclerView.Adapter<ListwifiAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         WifiInfo_ t = list.get(position);
-      holder.channel.setText("Channel: "+t.getChannel());
-      holder.namewifi.setText(t.getName());
-      holder.number.setText(""+position);
-      holder.dbm.setText(""+t.getDmb()+" dbm");
-      holder.mac.setText("Mac: "+t.getBssid());
+        holder.channel.setText("Channel: " + t.getChannel());
+        holder.namewifi.setText(t.getName());
+        holder.number.setText("" + position);
+        holder.dbm.setText("" + t.getDmb() + " dbm");
+        holder.mac.setText("Mac: " + t.getBssid());
         holder.couleur.setBackground(t.getColor());
 
     }
@@ -48,16 +50,17 @@ public class ListwifiAdapter extends RecyclerView.Adapter<ListwifiAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView number,namewifi,mac,dbm,channel;
-                ImageView couleur;
+        TextView number, namewifi, mac, dbm, channel;
+        ImageView couleur;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            number=itemView.findViewById(R.id.number);
-            namewifi=itemView.findViewById(R.id.name_wifi);
-            channel=itemView.findViewById(R.id.channel);
-            mac=itemView.findViewById(R.id.mac);
-            dbm=itemView.findViewById(R.id.dbm);
-            couleur=itemView.findViewById(R.id.colour_wifi);
+            number = itemView.findViewById(R.id.number);
+            namewifi = itemView.findViewById(R.id.name_wifi);
+            channel = itemView.findViewById(R.id.channel);
+            mac = itemView.findViewById(R.id.mac);
+            dbm = itemView.findViewById(R.id.dbm);
+            couleur = itemView.findViewById(R.id.colour_wifi);
 
             itemView.setOnClickListener(this);
         }
@@ -68,6 +71,7 @@ public class ListwifiAdapter extends RecyclerView.Adapter<ListwifiAdapter.ViewHo
 
         }
     }
+
     void setClickListener(ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }

@@ -26,12 +26,12 @@ import static android.os.Looper.getMainLooper;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link com.example.trackingwifi.DeviceList#newInstance} factory method to
+ * Use the {@link com.example.wifianalyzer.DeviceList#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class DeviceList extends Fragment implements WifiP2pManager.PeerListListener, WifiP2pManager.ChannelListener {
     RecyclerView recyclerView;
-    List<com.example.trackingwifi.Device> list=new ArrayList<>();
+    List<com.example.wifianalyzer.Device> list=new ArrayList<>();
     WifiP2pManager manager;
     WifiP2pManager.Channel channel;
     IntentFilter intentFilter= new IntentFilter();
@@ -66,8 +66,8 @@ public class DeviceList extends Fragment implements WifiP2pManager.PeerListListe
      * @return A new instance of fragment DeviceList.
      */
     // TODO: Rename and change types and number of parameters
-    public static com.example.trackingwifi.DeviceList newInstance(String param1, String param2) {
-        com.example.trackingwifi.DeviceList fragment = new com.example.trackingwifi.DeviceList();
+    public static com.example.wifianalyzer.DeviceList newInstance(String param1, String param2) {
+        com.example.wifianalyzer.DeviceList fragment = new com.example.wifianalyzer.DeviceList();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -141,7 +141,7 @@ public class DeviceList extends Fragment implements WifiP2pManager.PeerListListe
                 {
                     Toast.makeText(getContext(),wifiP2pDeviceList.getDeviceList().size()+"jajajajaj", Toast.LENGTH_LONG).show();
 peers.add(device);
-                    list.add(new com.example.trackingwifi.Device(device.primaryDeviceType,device.deviceName,device.deviceAddress));
+                    list.add(new com.example.wifianalyzer.Device(device.primaryDeviceType,device.deviceName,device.deviceAddress));
 
                     if (device.deviceName.equals("ABC"))
                         Toast.makeText(getContext(), "widi"+wifiP2pDeviceList.getDeviceList().size(), Toast.LENGTH_LONG).show();

@@ -3,9 +3,9 @@ package com.example.wifianalyzer.core.telemetry;
 import java.io.PrintStream;
 import java.util.HashMap;
 
-import com.example.trackingwifi.core.config.TelemetryConfig;
-import com.example.trackingwifi.core.base.Connection;
-import com.example.trackingwifi.core.base.Utils;
+import com.example.wifianalyzer.core.config.TelemetryConfig;
+import com.example.wifianalyzer.core.base.Connection;
+import com.example.wifianalyzer.core.base.Utils;
 
 public abstract class Telemetry extends Thread{
     private Connection c;

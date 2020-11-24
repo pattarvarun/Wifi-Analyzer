@@ -1,9 +1,9 @@
 package com.example.wifianalyzer.core.upload;
 
-import com.example.trackingwifi.core.base.Connection;
-import com.example.trackingwifi.core.base.Utils;
-import com.example.trackingwifi.core.config.SpeedtestConfig;
-import com.example.trackingwifi.core.log.Logger;
+import com.example.wifianalyzer.core.base.Connection;
+import com.example.wifianalyzer.core.base.Utils;
+import com.example.wifianalyzer.core.config.SpeedtestConfig;
+import com.example.wifianalyzer.core.log.Logger;
 
 public abstract class UploadStream {
     private String server, path;
@@ -54,7 +54,7 @@ public abstract class UploadStream {
                         public void onError(String err) {
                             log("An uploader died");
                             if(errorHandlingMode.equals(SpeedtestConfig.ONERROR_FAIL)){
-                                com.example.trackingwifi.core.upload.UploadStream.this.onError(err);
+                                com.example.wifianalyzer.core.upload.UploadStream.this.onError(err);
                                 return;
                             }
                             if(errorHandlingMode.equals(SpeedtestConfig.ONERROR_ATTEMPT_RESTART)||errorHandlingMode.equals(SpeedtestConfig.ONERROR_MUST_RESTART)){

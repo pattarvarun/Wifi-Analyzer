@@ -13,7 +13,7 @@ public class DBManager {
         this.context = c;
     }
 
-    public com.example.trackingwifi.DBManager open() throws SQLException {
+    public com.example.wifianalyzer.DBManager open() throws SQLException {
         this.dbHelper = new SampleSQLiteDBHelper(this.context);
         this.database = this.dbHelper.getWritableDatabase();
         return this;

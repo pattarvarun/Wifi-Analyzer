@@ -8,9 +8,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.trackingwifi.ui.frag2.Frag2Fragment;
-import com.example.trackingwifi.ui.main.SectionsPagerAdapter;
-import com.example.trackingwifi.ui.speed.SpeedFragment;
+import com.example.wifianalyzer.ui.frag2.Frag2Fragment;
+import com.example.wifianalyzer.ui.main.SectionsPagerAdapter;
+import com.example.wifianalyzer.ui.speed.SpeedFragment;
 import com.google.android.material.tabs.TabLayout;
 
 public class Main extends AppCompatActivity {
@@ -31,7 +31,7 @@ public class Main extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(com.example.trackingwifi.Main.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(com.example.wifianalyzer.Main.this);
         builder.setTitle(R.string.app_name);
         builder.setIcon(R.mipmap.ic_launcher);
         builder.setMessage("Do you want to exit?")
@@ -66,7 +66,7 @@ public class Main extends AppCompatActivity {
 
                 switch (position){
                     case 0:
-                        new com.example.trackingwifi.Frag1();
+                        new com.example.wifianalyzer.Frag1();
                         break;
                     case 1:
                         new SpeedFragment();
@@ -89,7 +89,7 @@ public class Main extends AppCompatActivity {
                 Fragment fragment=null;
                 switch (position){
                     case 0:
-                        new com.example.trackingwifi.Frag1();
+                        new com.example.wifianalyzer.Frag1();
                         break;
                     case 1:
                         new SpeedFragment();

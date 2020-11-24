@@ -1,9 +1,9 @@
 package com.example.wifianalyzer.core.ping;
 
-import com.example.trackingwifi.core.config.SpeedtestConfig;
-import com.example.trackingwifi.core.base.Connection;
-import com.example.trackingwifi.core.base.Utils;
-import com.example.trackingwifi.core.log.Logger;
+import com.example.wifianalyzer.core.config.SpeedtestConfig;
+import com.example.wifianalyzer.core.base.Connection;
+import com.example.wifianalyzer.core.base.Utils;
+import com.example.wifianalyzer.core.log.Logger;
 
 public abstract class PingStream {
     private String server, path;

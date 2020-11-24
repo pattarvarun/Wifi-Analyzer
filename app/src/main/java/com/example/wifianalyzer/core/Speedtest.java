@@ -1,10 +1,10 @@
 package com.example.wifianalyzer.core;
 
-import com.example.trackingwifi.core.config.SpeedtestConfig;
-import com.example.trackingwifi.core.config.TelemetryConfig;
-import com.example.trackingwifi.core.serverSelector.ServerSelector;
-import com.example.trackingwifi.core.serverSelector.TestPoint;
-import com.example.trackingwifi.core.worker.SpeedtestWorker;
+import com.example.wifianalyzer.core.config.SpeedtestConfig;
+import com.example.wifianalyzer.core.config.TelemetryConfig;
+import com.example.wifianalyzer.core.serverSelector.ServerSelector;
+import com.example.wifianalyzer.core.serverSelector.TestPoint;
+import com.example.wifianalyzer.core.worker.SpeedtestWorker;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

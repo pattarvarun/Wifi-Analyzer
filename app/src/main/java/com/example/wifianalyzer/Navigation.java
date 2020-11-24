@@ -113,14 +113,14 @@ TextView textView;
     private void updateUIvalues(Location location) {
 //navigationView.setLongitude(location.getLatitude());
         tvHeading.setText(""+location.getLatitude());
-        Geocoder geocoder=new Geocoder(com.example.trackingwifi.Navigation.this);
+        Geocoder geocoder=new Geocoder(com.example.wifianalyzer.Navigation.this);
         try{
             List<Address> list= geocoder.getFromLocation(location.getLatitude(),location.getLongitude(),1);
            // adresse.setText(""+list.get(0).getAddressLine(0));
 
         }
         catch (Exception e){
-            Toast.makeText(com.example.trackingwifi.Navigation.this,"DOESNT WORK!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(com.example.wifianalyzer.Navigation.this,"DOESNT WORK!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -136,7 +136,7 @@ TextView textView;
     }
 
     private void updateGps(){
-        fusedLocationProviderClient= LocationServices.getFusedLocationProviderClient(com.example.trackingwifi.Navigation.this);
+        fusedLocationProviderClient= LocationServices.getFusedLocationProviderClient(com.example.wifianalyzer.Navigation.this);
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)== PackageManager.PERMISSION_GRANTED){
             fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this,new OnSuccessListener<Location>() {
                 @Override

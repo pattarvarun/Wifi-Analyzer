@@ -27,14 +27,14 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.trackingwifi.DBManager;
-import com.example.trackingwifi.R;
-import com.example.trackingwifi.SampleSQLiteDBHelper;
-import com.example.trackingwifi.SpeedTestAdapter;
-import com.example.trackingwifi.core.Speedtest;
-import com.example.trackingwifi.core.config.SpeedtestConfig;
-import com.example.trackingwifi.core.config.TelemetryConfig;
-import com.example.trackingwifi.core.serverSelector.TestPoint;
+import com.example.wifianalyzer.DBManager;
+import com.example.wifianalyzer.R;
+import com.example.wifianalyzer.SampleSQLiteDBHelper;
+import com.example.wifianalyzer.SpeedTestAdapter;
+import com.example.wifianalyzer.core.Speedtest;
+import com.example.wifianalyzer.core.config.SpeedtestConfig;
+import com.example.wifianalyzer.core.config.TelemetryConfig;
+import com.example.wifianalyzer.core.serverSelector.TestPoint;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -406,8 +406,8 @@ toolbar.setTitle(getIntent().getExtras().getString("name_wifi"));
                         dbManager.open();
 
                         Cursor cursor=fetch();
-                        Toast.makeText(com.example.trackingwifi.ui.MainActivity.this, "The total cursor count is " + cursor.getCount(), Toast.LENGTH_LONG).show();
-                        SpeedTestAdapter speedTestAdapter= new SpeedTestAdapter(com.example.trackingwifi.ui.MainActivity.this, cursor);
+                        Toast.makeText(com.example.wifianalyzer.ui.MainActivity.this, "The total cursor count is " + cursor.getCount(), Toast.LENGTH_LONG).show();
+                        SpeedTestAdapter speedTestAdapter= new SpeedTestAdapter(com.example.wifianalyzer.ui.MainActivity.this, cursor);
                         recyclerView1.setAdapter(speedTestAdapter);
                     }
                 });

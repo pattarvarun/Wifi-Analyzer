@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.trackingwifi.R;
+import com.example.wifianalyzer.R;
 
 /**
  * A placeholder fragment containing a simple view.

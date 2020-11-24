@@ -2,8 +2,8 @@ package com.example.wifianalyzer.core.download;
 
 import java.io.InputStream;
 
-import com.example.trackingwifi.core.base.Connection;
-import com.example.trackingwifi.core.base.Utils;
+import com.example.wifianalyzer.core.base.Connection;
+import com.example.wifianalyzer.core.base.Utils;
 
 public abstract class Downloader extends Thread{
     private Connection c;

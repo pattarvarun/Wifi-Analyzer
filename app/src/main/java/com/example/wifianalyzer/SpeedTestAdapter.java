@@ -10,7 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.internet_speed_testing.ProgressionModel;
-import com.example.trackingwifi.ui.frag2.ListwifiAdapter;
+import com.example.wifianalyzer.ui.frag2.ListwifiAdapter;
 
 import java.util.ArrayList;
 import java.util.Date;
