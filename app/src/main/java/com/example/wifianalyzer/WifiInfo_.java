@@ -3,8 +3,8 @@ package com.example.wifianalyzer;
 import android.graphics.drawable.Drawable;
 
 public class WifiInfo_ {
-    private int dmb,freq,distance,channel,wifi_speed;
-    private String name,Bssid,encry,addresse;
+    private int dmb, freq, distance, channel, wifi_speed;
+    private String name, Bssid, encry, addresse;
     Drawable drawable;
 
     public Drawable getColor() {
@@ -23,7 +23,8 @@ public class WifiInfo_ {
         return addresse;
     }
 
-    public WifiInfo_(int dmb, int freq, int distance, int channel, int wifi_speed, String name, String bssid, String encry, String addresse) {
+    public WifiInfo_(int dmb, int freq, int distance, int channel, int wifi_speed, String name,
+            String bssid, String encry, String addresse) {
         this.dmb = dmb;
         this.freq = freq;
         this.distance = distance;
@@ -45,26 +46,29 @@ public class WifiInfo_ {
         this.distance = distance;
         this.name = name;
     }
-    public WifiInfo_(int dmb, int freq, String name,int channel) {
+
+    public WifiInfo_(int dmb, int freq, String name, int channel) {
         this.dmb = dmb;
         this.freq = freq;
         this.channel = channel;
         this.name = name;
     }
-    public WifiInfo_(int dmb, int freq, String name,int channel,String bssid,Drawable color) {
+
+    public WifiInfo_(int dmb, int freq, String name, int channel, String bssid, Drawable color) {
         this.dmb = dmb;
         this.freq = freq;
         this.channel = channel;
         this.name = name;
-        this.Bssid=bssid;
-        this.drawable=color;
+        this.Bssid = bssid;
+        this.drawable = color;
     }
-    public WifiInfo_(int dmb, int freq, String name,int channel,String bssid) {
+
+    public WifiInfo_(int dmb, int freq, String name, int channel, String bssid) {
         this.dmb = dmb;
         this.freq = freq;
         this.channel = channel;
         this.name = name;
-        this.Bssid=bssid;
+        this.Bssid = bssid;
     }
 
     public String getBssid() {

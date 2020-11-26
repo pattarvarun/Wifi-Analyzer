@@ -23,12 +23,14 @@ public class Main extends AppCompatActivity {
             R.drawable.ic_view_list_black_48dp,
             R.drawable.ic_devices_other_black_48dp
     };
+
     @Override
     public void onStart() {
         super.onStart();
 
 
     }
+
     @Override
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(com.example.wifianalyzer.Main.this);
@@ -56,15 +58,17 @@ public class Main extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
-          viewPager = findViewById(R.id.view_pager);
+        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this,
+                getSupportFragmentManager());
+        viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(sectionsPagerAdapter);
-         tabs = findViewById(R.id.tabs);
+        tabs = findViewById(R.id.tabs);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            public void onPageScrolled(int position, float positionOffset,
+                    int positionOffsetPixels) {
 
-                switch (position){
+                switch (position) {
                     case 0:
                         new com.example.wifianalyzer.Frag1();
                         break;
@@ -86,8 +90,8 @@ public class Main extends AppCompatActivity {
 
                 // do this instead, assuming your adapter reference
                 // is named mAdapter:
-                Fragment fragment=null;
-                switch (position){
+                Fragment fragment = null;
+                switch (position) {
                     case 0:
                         new com.example.wifianalyzer.Frag1();
                         break;
@@ -105,15 +109,17 @@ public class Main extends AppCompatActivity {
             }
 
             @Override
-            public void onPageScrollStateChanged(int state) {  }
+            public void onPageScrollStateChanged(int state) {
+            }
         });
         tabs.setupWithViewPager(viewPager);
 
 
-setupTabIcons();
+        setupTabIcons();
     }
+
     private void setupTabIcons() {
-       tabs .getTabAt(0).setIcon(tabIcons[0]);
+        tabs.getTabAt(0).setIcon(tabIcons[0]);
         tabs.getTabAt(1).setIcon(tabIcons[1]);
         tabs.getTabAt(2).setIcon(tabIcons[2]);
         tabs.getTabAt(3).setIcon(tabIcons[3]);

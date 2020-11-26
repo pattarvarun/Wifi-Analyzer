@@ -1,7 +1,9 @@
 package com.example.wifianalyzer;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
+
 import com.example.wifianalyzer.ui.speed.SpeedFragment;
 
 public class Speed extends AppCompatActivity {

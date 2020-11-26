@@ -3,8 +3,8 @@ package com.example.wifianalyzer;
 import java.util.Date;
 
 public class SpeedTest_ {
-    private String download,upload;
-    private String date ;
+    private String download, upload;
+    private String date;
 
     private String namewifi;
 

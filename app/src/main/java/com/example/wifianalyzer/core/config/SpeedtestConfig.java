@@ -4,50 +4,87 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class SpeedtestConfig {
-    private int dl_ckSize=100, ul_ckSize=20;
-    private int dl_parallelStreams=3, ul_parallelStreams=3;
-    private int dl_streamDelay=300, ul_streamDelay=300;
-    private double dl_graceTime=1.5, ul_graceTime=1.5;
-    private int dl_connectTimeout=5000, dl_soTimeout=10000, ul_connectTimeout=5000, ul_soTimeout=10000, ping_connectTimeout=2000, ping_soTimeout=5000;
-    private int dl_recvBuffer=-1, dl_sendBuffer=-1, ul_recvBuffer=-1, ul_sendBuffer=16384, ping_recvBuffer=-1, ping_sendBuffer=-1;
-    private String errorHandlingMode=ONERROR_ATTEMPT_RESTART;
-    public static final String ONERROR_FAIL="fail", ONERROR_ATTEMPT_RESTART="attempt-restart", ONERROR_MUST_RESTART="must-restart";
-    private int time_dl_max=15, time_ul_max=15;
-    private boolean time_auto=true;
-    private int count_ping=10;
-    private String telemetry_extra="";
-    private double overheadCompensationFactor=1.06;
-    private boolean getIP_isp=true;
-    private String getIP_distance=DISTANCE_KM;
-    public static final String DISTANCE_NO="no", DISTANCE_MILES="mi", DISTANCE_KM="km";
-    private boolean useMebibits=false;
-    private String test_order="IP_D_U";
+    private int dl_ckSize = 100, ul_ckSize = 20;
+    private int dl_parallelStreams = 3, ul_parallelStreams = 3;
+    private int dl_streamDelay = 300, ul_streamDelay = 300;
+    private double dl_graceTime = 1.5, ul_graceTime = 1.5;
+    private int dl_connectTimeout = 5000, dl_soTimeout = 10000, ul_connectTimeout = 5000,
+            ul_soTimeout = 10000, ping_connectTimeout = 2000, ping_soTimeout = 5000;
+    private int dl_recvBuffer = -1, dl_sendBuffer = -1, ul_recvBuffer = -1, ul_sendBuffer = 16384,
+            ping_recvBuffer = -1, ping_sendBuffer = -1;
+    private String errorHandlingMode = ONERROR_ATTEMPT_RESTART;
+    public static final String ONERROR_FAIL = "fail", ONERROR_ATTEMPT_RESTART = "attempt-restart",
+            ONERROR_MUST_RESTART = "must-restart";
+    private int time_dl_max = 15, time_ul_max = 15;
+    private boolean time_auto = true;
+    private int count_ping = 10;
+    private String telemetry_extra = "";
+    private double overheadCompensationFactor = 1.06;
+    private boolean getIP_isp = true;
+    private String getIP_distance = DISTANCE_KM;
+    public static final String DISTANCE_NO = "no", DISTANCE_MILES = "mi", DISTANCE_KM = "km";
+    private boolean useMebibits = false;
+    private String test_order = "IP_D_U";
 
-    private void check(){
-        if(dl_ckSize<1) throw new IllegalArgumentException("dl_ckSize must be at least 1");
-        if(ul_ckSize<1) throw new IllegalArgumentException("ul_ckSize must be at least 1");
-        if(dl_parallelStreams<1) throw new IllegalArgumentException("dl_parallelStreams must be at least 1");
-        if(ul_parallelStreams<1) throw new IllegalArgumentException("ul_parallelStreams must be at least 1");
-        if(dl_streamDelay<0) throw new IllegalArgumentException("dl_streamDelay must be at least 0");
-        if(ul_streamDelay<0) throw new IllegalArgumentException("ul_streamDelay must be at least 0");
-        if(dl_graceTime<0) throw new IllegalArgumentException("dl_graceTime must be at least 0");
-        if(ul_graceTime<0) throw new IllegalArgumentException("ul_graceTime must be at least 0");
-        if(!(errorHandlingMode.equals(ONERROR_FAIL)||errorHandlingMode.equals(ONERROR_ATTEMPT_RESTART)||errorHandlingMode.equals(ONERROR_MUST_RESTART))) throw new IllegalArgumentException("errorHandlingMode must be fail, attempt-restart, or must-restart");
-        if(time_dl_max<1) throw new IllegalArgumentException("time_dl_max must be at least 1");
-        if(time_ul_max<1) throw new IllegalArgumentException("time_ul_max must be at least 1");
-        if(count_ping<1) throw new IllegalArgumentException("count_ping must be at least 1");
-        if(overheadCompensationFactor<1) throw new IllegalArgumentException("overheadCompensationFactor must be at least 1");
-        if(!(getIP_distance.equals(DISTANCE_NO)||getIP_distance.equals(DISTANCE_KM)||getIP_distance.equals(DISTANCE_MILES))) throw new IllegalArgumentException("getIP_distance must be no, km or miles");
-        for(char c:test_order.toCharArray()){
-            if(!(c=='I'||c=='P'||c=='D'||c=='U'||c=='_')) throw new IllegalArgumentException("test_order can only contain characters I, P, D, U, _");
+    private void check() {
+        if (dl_ckSize < 1) throw new IllegalArgumentException("dl_ckSize must be at least 1");
+        if (ul_ckSize < 1) throw new IllegalArgumentException("ul_ckSize must be at least 1");
+        if (dl_parallelStreams < 1) {
+            throw new IllegalArgumentException(
+                    "dl_parallelStreams must be at least 1");
+        }
+        if (ul_parallelStreams < 1) {
+            throw new IllegalArgumentException(
+                    "ul_parallelStreams must be at least 1");
+        }
+        if (dl_streamDelay < 0) {
+            throw new IllegalArgumentException(
+                    "dl_streamDelay must be at least 0");
+        }
+        if (ul_streamDelay < 0) {
+            throw new IllegalArgumentException(
+                    "ul_streamDelay must be at least 0");
+        }
+        if (dl_graceTime < 0) throw new IllegalArgumentException("dl_graceTime must be at least 0");
+        if (ul_graceTime < 0) throw new IllegalArgumentException("ul_graceTime must be at least 0");
+        if (!(errorHandlingMode.equals(ONERROR_FAIL) || errorHandlingMode.equals(
+                ONERROR_ATTEMPT_RESTART) || errorHandlingMode.equals(ONERROR_MUST_RESTART))) {
+            throw new IllegalArgumentException(
+                    "errorHandlingMode must be fail, attempt-restart, or must-restart");
+        }
+        if (time_dl_max < 1) throw new IllegalArgumentException("time_dl_max must be at least 1");
+        if (time_ul_max < 1) throw new IllegalArgumentException("time_ul_max must be at least 1");
+        if (count_ping < 1) throw new IllegalArgumentException("count_ping must be at least 1");
+        if (overheadCompensationFactor < 1) {
+            throw new IllegalArgumentException(
+                    "overheadCompensationFactor must be at least 1");
+        }
+        if (!(getIP_distance.equals(DISTANCE_NO) || getIP_distance.equals(DISTANCE_KM)
+                || getIP_distance.equals(DISTANCE_MILES))) {
+            throw new IllegalArgumentException(
+                    "getIP_distance must be no, km or miles");
+        }
+        for (char c : test_order.toCharArray()) {
+            if (!(c == 'I' || c == 'P' || c == 'D' || c == 'U' || c == '_')) {
+                throw new IllegalArgumentException(
+                        "test_order can only contain characters I, P, D, U, _");
+            }
         }
     }
 
-    public SpeedtestConfig(){
+    public SpeedtestConfig() {
         check();
     }
 
-    public SpeedtestConfig(int dl_ckSize, int ul_ckSize, int dl_parallelStreams, int ul_parallelStreams, int dl_streamDelay, int ul_streamDelay, double dl_graceTime, double ul_graceTime, int dl_connectTimeout, int dl_soTimeout, int ul_connectTimeout, int ul_soTimeout, int ping_connectTimeout, int ping_soTimeout, int dl_recvBuffer, int dl_sendBuffer, int ul_recvBuffer, int ul_sendBuffer, int ping_recvBuffer, int ping_sendBuffer, String errorHandlingMode, int time_dl_max, int time_ul_max, boolean time_auto, int count_ping, String telemetry_extra, double overheadCompensationFactor, boolean getIP_isp, String getIP_distance, boolean useMebibits, String test_order) {
+    public SpeedtestConfig(int dl_ckSize, int ul_ckSize, int dl_parallelStreams,
+            int ul_parallelStreams, int dl_streamDelay, int ul_streamDelay, double dl_graceTime,
+            double ul_graceTime, int dl_connectTimeout, int dl_soTimeout, int ul_connectTimeout,
+            int ul_soTimeout, int ping_connectTimeout, int ping_soTimeout, int dl_recvBuffer,
+            int dl_sendBuffer, int ul_recvBuffer, int ul_sendBuffer, int ping_recvBuffer,
+            int ping_sendBuffer, String errorHandlingMode, int time_dl_max, int time_ul_max,
+            boolean time_auto, int count_ping, String telemetry_extra,
+            double overheadCompensationFactor, boolean getIP_isp, String getIP_distance,
+            boolean useMebibits, String test_order) {
         this.dl_ckSize = dl_ckSize;
         this.ul_ckSize = ul_ckSize;
         this.dl_parallelStreams = dl_parallelStreams;
@@ -82,24 +119,29 @@ public class SpeedtestConfig {
         check();
     }
 
-    public SpeedtestConfig(JSONObject json){
+    public SpeedtestConfig(JSONObject json) {
         try {
             if (json.has("dl_ckSize")) this.dl_ckSize = json.getInt("dl_ckSize");
             if (json.has("ul_ckSize")) this.ul_ckSize = json.getInt("ul_ckSize");
-            if (json.has("dl_parallelStreams"))
+            if (json.has("dl_parallelStreams")) {
                 this.dl_parallelStreams = json.getInt("dl_parallelStreams");
-            if (json.has("ul_parallelStreams"))
+            }
+            if (json.has("ul_parallelStreams")) {
                 this.ul_parallelStreams = json.getInt("ul_parallelStreams");
+            }
             if (json.has("dl_streamDelay")) this.dl_streamDelay = json.getInt("dl_streamDelay");
             if (json.has("ul_streamDelay")) this.ul_streamDelay = json.getInt("ul_streamDelay");
             if (json.has("dl_graceTime")) this.dl_graceTime = json.getDouble("dl_graceTime");
             if (json.has("ul_graceTime")) this.ul_graceTime = json.getDouble("ul_graceTime");
-            if (json.has("dl_connectTimeout"))
+            if (json.has("dl_connectTimeout")) {
                 this.dl_connectTimeout = json.getInt("dl_connectTimeout");
-            if (json.has("ul_connectTimeout"))
+            }
+            if (json.has("ul_connectTimeout")) {
                 this.ul_connectTimeout = json.getInt("ul_connectTimeout");
-            if (json.has("ping_connectTimeout"))
+            }
+            if (json.has("ping_connectTimeout")) {
                 this.ping_connectTimeout = json.getInt("ping_connectTimeout");
+            }
             if (json.has("dl_soTimeout")) this.dl_soTimeout = json.getInt("dl_soTimeout");
             if (json.has("ul_soTimeout")) this.ul_soTimeout = json.getInt("ul_soTimeout");
             if (json.has("ping_soTimeout")) this.ping_soTimeout = json.getInt("ping_soTimeout");
@@ -109,22 +151,25 @@ public class SpeedtestConfig {
             if (json.has("dl_sendBuffer")) this.dl_sendBuffer = json.getInt("dl_sendBuffer");
             if (json.has("ul_sendBuffer")) this.ul_sendBuffer = json.getInt("ul_sendBuffer");
             if (json.has("ping_sendBuffer")) this.ping_sendBuffer = json.getInt("ping_sendBuffer");
-            if (json.has("errorHandlingMode"))
+            if (json.has("errorHandlingMode")) {
                 this.errorHandlingMode = json.getString("errorHandlingMode");
+            }
             if (json.has("time_dl_max")) this.time_dl_max = json.getInt("time_dl_max");
             if (json.has("time_ul_max")) this.time_ul_max = json.getInt("time_ul_max");
             if (json.has("count_ping")) this.count_ping = json.getInt("count_ping");
-            if (json.has("telemetry_extra"))
+            if (json.has("telemetry_extra")) {
                 this.telemetry_extra = json.getString("telemetry_extra");
-            if (json.has("overheadCompensationFactor"))
+            }
+            if (json.has("overheadCompensationFactor")) {
                 this.overheadCompensationFactor = json.getDouble("overheadCompensationFactor");
+            }
             if (json.has("getIP_isp")) this.getIP_isp = json.getBoolean("getIP_isp");
             if (json.has("getIP_distance")) this.getIP_distance = json.getString("getIP_distance");
             if (json.has("test_order")) this.test_order = json.getString("test_order");
             if (json.has("useMebibits")) this.useMebibits = json.getBoolean("useMebibits");
             check();
-        }catch(JSONException t){
-            throw new IllegalArgumentException("Invalid JSON ("+t.toString()+")");
+        } catch (JSONException t) {
+            throw new IllegalArgumentException("Invalid JSON (" + t.toString() + ")");
         }
     }
 
@@ -253,42 +298,54 @@ public class SpeedtestConfig {
     }
 
     public void setDl_ckSize(int dl_ckSize) {
-        if(dl_ckSize<1) throw new IllegalArgumentException("dl_ckSize must be at least 1");
+        if (dl_ckSize < 1) throw new IllegalArgumentException("dl_ckSize must be at least 1");
         this.dl_ckSize = dl_ckSize;
     }
 
     public void setUl_ckSize(int ul_ckSize) {
-        if(ul_ckSize<1) throw new IllegalArgumentException("ul_ckSize must be at least 1");
+        if (ul_ckSize < 1) throw new IllegalArgumentException("ul_ckSize must be at least 1");
         this.ul_ckSize = ul_ckSize;
     }
 
     public void setDl_parallelStreams(int dl_parallelStreams) {
-        if(dl_parallelStreams<1) throw new IllegalArgumentException("dl_parallelStreams must be at least 1");
+        if (dl_parallelStreams < 1) {
+            throw new IllegalArgumentException(
+                    "dl_parallelStreams must be at least 1");
+        }
         this.dl_parallelStreams = dl_parallelStreams;
     }
 
     public void setUl_parallelStreams(int ul_parallelStreams) {
-        if(ul_parallelStreams<1) throw new IllegalArgumentException("ul_parallelStreams must be at least 1");
+        if (ul_parallelStreams < 1) {
+            throw new IllegalArgumentException(
+                    "ul_parallelStreams must be at least 1");
+        }
         this.ul_parallelStreams = ul_parallelStreams;
     }
 
     public void setDl_streamDelay(int dl_streamDelay) {
-        if(dl_streamDelay<0) throw new IllegalArgumentException("dl_streamDelay must be at least 0");
+        if (dl_streamDelay < 0) {
+            throw new IllegalArgumentException(
+                    "dl_streamDelay must be at least 0");
+        }
         this.dl_streamDelay = dl_streamDelay;
     }
 
     public void setUl_streamDelay(int ul_streamDelay) {
-        if(ul_streamDelay<0) throw new IllegalArgumentException("ul_streamDelay must be at least 0");
+        if (ul_streamDelay < 0) {
+            throw new IllegalArgumentException(
+                    "ul_streamDelay must be at least 0");
+        }
         this.ul_streamDelay = ul_streamDelay;
     }
 
     public void setDl_graceTime(double dl_graceTime) {
-        if(dl_graceTime<0) throw new IllegalArgumentException("dl_graceTime must be at least 0");
+        if (dl_graceTime < 0) throw new IllegalArgumentException("dl_graceTime must be at least 0");
         this.dl_graceTime = dl_graceTime;
     }
 
     public void setUl_graceTime(double ul_graceTime) {
-        if(ul_graceTime<0) throw new IllegalArgumentException("ul_graceTime must be at least 0");
+        if (ul_graceTime < 0) throw new IllegalArgumentException("ul_graceTime must be at least 0");
         this.ul_graceTime = ul_graceTime;
     }
 
@@ -353,17 +410,21 @@ public class SpeedtestConfig {
     }
 
     public void setErrorHandlingMode(String errorHandlingMode) {
-        if(!(errorHandlingMode.equals(ONERROR_FAIL)||errorHandlingMode.equals(ONERROR_ATTEMPT_RESTART)||errorHandlingMode.equals(ONERROR_MUST_RESTART))) throw new IllegalArgumentException("errorHandlingMode must be fail, attempt-restart, or must-restart");
+        if (!(errorHandlingMode.equals(ONERROR_FAIL) || errorHandlingMode.equals(
+                ONERROR_ATTEMPT_RESTART) || errorHandlingMode.equals(ONERROR_MUST_RESTART))) {
+            throw new IllegalArgumentException(
+                    "errorHandlingMode must be fail, attempt-restart, or must-restart");
+        }
         this.errorHandlingMode = errorHandlingMode;
     }
 
     public void setTime_dl_max(int time_dl_max) {
-        if(time_dl_max<1) throw new IllegalArgumentException("time_dl_max must be at least 1");
+        if (time_dl_max < 1) throw new IllegalArgumentException("time_dl_max must be at least 1");
         this.time_dl_max = time_dl_max;
     }
 
     public void setTime_ul_max(int time_ul_max) {
-        if(time_ul_max<1) throw new IllegalArgumentException("time_ul_max must be at least 1");
+        if (time_ul_max < 1) throw new IllegalArgumentException("time_ul_max must be at least 1");
         this.time_ul_max = time_ul_max;
     }
 
@@ -373,7 +434,7 @@ public class SpeedtestConfig {
     }
 
     public void setCount_ping(int count_ping) {
-        if(count_ping<1) throw new IllegalArgumentException("count_ping must be at least 1");
+        if (count_ping < 1) throw new IllegalArgumentException("count_ping must be at least 1");
         this.count_ping = count_ping;
     }
 
@@ -383,7 +444,10 @@ public class SpeedtestConfig {
     }
 
     public void setOverheadCompensationFactor(double overheadCompensationFactor) {
-        if(overheadCompensationFactor<1) throw new IllegalArgumentException("overheadCompensationFactor must be at least 1");
+        if (overheadCompensationFactor < 1) {
+            throw new IllegalArgumentException(
+                    "overheadCompensationFactor must be at least 1");
+        }
         this.overheadCompensationFactor = overheadCompensationFactor;
     }
 
@@ -393,7 +457,11 @@ public class SpeedtestConfig {
     }
 
     public void setGetIP_distance(String getIP_distance) {
-        if(!(getIP_distance.equals(DISTANCE_NO)||getIP_distance.equals(DISTANCE_KM)||getIP_distance.equals(DISTANCE_MILES))) throw new IllegalArgumentException("getIP_distance must be no, km or miles");
+        if (!(getIP_distance.equals(DISTANCE_NO) || getIP_distance.equals(DISTANCE_KM)
+                || getIP_distance.equals(DISTANCE_MILES))) {
+            throw new IllegalArgumentException(
+                    "getIP_distance must be no, km or miles");
+        }
         this.getIP_distance = getIP_distance;
     }
 
@@ -403,14 +471,23 @@ public class SpeedtestConfig {
     }
 
     public void setTest_order(String test_order) {
-        for(char c:test_order.toCharArray()){
-            if(!(c=='I'||c=='P'||c=='D'||c=='U'||c=='_')) throw new IllegalArgumentException("test_order can only contain characters I, P, D, U, _");
+        for (char c : test_order.toCharArray()) {
+            if (!(c == 'I' || c == 'P' || c == 'D' || c == 'U' || c == '_')) {
+                throw new IllegalArgumentException(
+                        "test_order can only contain characters I, P, D, U, _");
+            }
         }
         this.test_order = test_order;
     }
 
-    public SpeedtestConfig clone(){
-        return new SpeedtestConfig(dl_ckSize, ul_ckSize, dl_parallelStreams, ul_parallelStreams, dl_streamDelay, ul_streamDelay, dl_graceTime, ul_graceTime, dl_connectTimeout, dl_soTimeout, ul_connectTimeout, ul_soTimeout, ping_connectTimeout, ping_soTimeout, dl_recvBuffer, dl_sendBuffer, ul_recvBuffer, ul_sendBuffer, ping_recvBuffer, ping_sendBuffer, errorHandlingMode, time_dl_max, time_ul_max, time_auto, count_ping, telemetry_extra, overheadCompensationFactor, getIP_isp, getIP_distance, useMebibits, test_order);
+    public SpeedtestConfig clone() {
+        return new SpeedtestConfig(dl_ckSize, ul_ckSize, dl_parallelStreams, ul_parallelStreams,
+                dl_streamDelay, ul_streamDelay, dl_graceTime, ul_graceTime, dl_connectTimeout,
+                dl_soTimeout, ul_connectTimeout, ul_soTimeout, ping_connectTimeout, ping_soTimeout,
+                dl_recvBuffer, dl_sendBuffer, ul_recvBuffer, ul_sendBuffer, ping_recvBuffer,
+                ping_sendBuffer, errorHandlingMode, time_dl_max, time_ul_max, time_auto, count_ping,
+                telemetry_extra, overheadCompensationFactor, getIP_isp, getIP_distance, useMebibits,
+                test_order);
     }
 }
 

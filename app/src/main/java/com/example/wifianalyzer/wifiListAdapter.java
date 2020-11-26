@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,10 +16,12 @@ public class wifiListAdapter extends RecyclerView.Adapter<wifiListAdapter.ViewHo
     private List<WifiInfo_> list;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
-    public wifiListAdapter(Context context, List<WifiInfo_> list){
+
+    public wifiListAdapter(Context context, List<WifiInfo_> list) {
         this.mInflater = LayoutInflater.from(context);
         this.list = list;
     }
+
     @NonNull
     @Override
     public wifiListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -27,15 +30,14 @@ public class wifiListAdapter extends RecyclerView.Adapter<wifiListAdapter.ViewHo
     }
 
 
-
     @Override
     public void onBindViewHolder(@NonNull wifiListAdapter.ViewHolder holder, int position) {
         WifiInfo_ t = list.get(position);
-        holder.channel.setText(""+t.getChannel()+"-> Channel");
+        holder.channel.setText("" + t.getChannel() + "-> Channel");
         holder.namewifi.setText(t.getName());
-        holder.number.setText(""+position);
-        holder.dbm.setText(""+t.getDmb()+" dbm");
-        holder.mac.setText("Mac: "+t.getBssid());
+        holder.number.setText("" + position);
+        holder.dbm.setText("" + t.getDmb() + " dbm");
+        holder.mac.setText("Mac: " + t.getBssid());
     }
 
     @Override
@@ -44,15 +46,16 @@ public class wifiListAdapter extends RecyclerView.Adapter<wifiListAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView number,namewifi,mac,dbm,channel;
+        TextView number, namewifi, mac, dbm, channel;
         ImageView couleur;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            number=itemView.findViewById(R.id.number);
-            namewifi=itemView.findViewById(R.id.name_wifi);
-            channel=itemView.findViewById(R.id.channel);
-            mac=itemView.findViewById(R.id.mac);
-            dbm=itemView.findViewById(R.id.dbm);
+            number = itemView.findViewById(R.id.number);
+            namewifi = itemView.findViewById(R.id.name_wifi);
+            channel = itemView.findViewById(R.id.channel);
+            mac = itemView.findViewById(R.id.mac);
+            dbm = itemView.findViewById(R.id.dbm);
             itemView.setOnClickListener(this);
         }
 
@@ -62,6 +65,7 @@ public class wifiListAdapter extends RecyclerView.Adapter<wifiListAdapter.ViewHo
 
         }
     }
+
     void setClickListener(ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }

@@ -17,10 +17,10 @@ import androidx.annotation.Nullable;
 import java.util.List;
 
 public class NavigationView extends View {
-    int fps=200;
+    int fps = 200;
     private boolean showNetwork;
     private ImageView thisisImg;
-    float longitude=0;
+    float longitude = 0;
     private float currentDegree = 0f;
 
     public int getFps() {
@@ -60,6 +60,7 @@ public class NavigationView extends View {
         super(context, attrs, defStyleAttr);
 
     }
+
     android.os.Handler mHandler = new android.os.Handler();
     Runnable mTick = new Runnable() {
         @Override
@@ -75,35 +76,43 @@ public class NavigationView extends View {
         mHandler.post(mTick);
 
     }
-    public void setFrameRate(int fps) { this.fps = fps; }
-    public int getFrameRate() { return this.fps; };
-    public void setShowNetwork(boolean showNetwork, List<com.example.wifianalyzer.Pos> list){
-        this.showNetwork=showNetwork;
+
+    public void setFrameRate(int fps) {
+        this.fps = fps;
+    }
+
+    public int getFrameRate() {
+        return this.fps;
+    }
+
+    ;
+
+    public void setShowNetwork(boolean showNetwork, List<com.example.wifianalyzer.Pos> list) {
+        this.showNetwork = showNetwork;
 
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        Drawable drawable=getResources().getDrawable(R.drawable.navigation,null);
-        Drawable drawable1=getResources().getDrawable(R.drawable.ic_wifi_black_48dp,null);
+        Drawable drawable = getResources().getDrawable(R.drawable.navigation, null);
+        Drawable drawable1 = getResources().getDrawable(R.drawable.ic_wifi_black_48dp, null);
 
-ImageView imageView=new ImageView(getContext());
-imageView.setImageDrawable(drawable);
-        Animation aniRotate = AnimationUtils.loadAnimation(getContext(),R.anim.rotate);
+        ImageView imageView = new ImageView(getContext());
+        imageView.setImageDrawable(drawable);
+        Animation aniRotate = AnimationUtils.loadAnimation(getContext(), R.anim.rotate);
         imageView.startAnimation(aniRotate);
 //        Drawable drawable2 = thisisImg.getDrawable();
 
 
-
-        drawable1.setBounds(0,0,60,60);
-        drawable.setBounds(0,0,300,300);
+        drawable1.setBounds(0, 0, 60, 60);
+        drawable.setBounds(0, 0, 300, 300);
         int width = getWidth();
         int height = getHeight();
 
         int r = Math.min(width, height);
-        int i = (r) /2;
-        int j = r/2 - 1;
+        int i = (r) / 2;
+        int j = r / 2 - 1;
 
 
         Paint localPaint1 = new Paint();
@@ -113,13 +122,13 @@ imageView.setImageDrawable(drawable);
         localPaint1.setAntiAlias(true);
 
         localPaint1.setStyle(Paint.Style.STROKE);
-        canvas.drawCircle(i, j, j-55, localPaint1);
+        canvas.drawCircle(i, j, j - 55, localPaint1);
 
 
-        canvas.translate(160,160);
+        canvas.translate(160, 160);
 
-       imageView.draw(canvas);
-       // canvas.translate(-(i-65),-(j-65));
+        imageView.draw(canvas);
+        // canvas.translate(-(i-65),-(j-65));
         RotateAnimation ra = new RotateAnimation(
                 currentDegree,
                 -longitude,

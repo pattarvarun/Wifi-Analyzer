@@ -25,7 +25,7 @@ public class SampleSQLiteDBHelper extends SQLiteOpenHelper {
                 PERSON_COLUMN_NAME + " TEXT, " +
                 PERSON_COLUMN_DATE + " DATE , " +
                 PERSON_COLUMN_D + " TEXT ," +
-                PERSON_COLUMN_U+"TEXT "+")");
+                PERSON_COLUMN_U + "TEXT " + ")");
     }
 
     @Override

@@ -16,37 +16,38 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class Speedtest {
-    private ArrayList<TestPoint> servers=new ArrayList<>();
-    private TestPoint selectedServer=null;
-    private SpeedtestConfig config=new SpeedtestConfig();
-    private TelemetryConfig telemetryConfig=new TelemetryConfig();
-    private int state=0; //0=configs, 1=test points, 2=server selection, 3=ready, 4=testing, 5=finished
+    private ArrayList<TestPoint> servers = new ArrayList<>();
+    private TestPoint selectedServer = null;
+    private SpeedtestConfig config = new SpeedtestConfig();
+    private TelemetryConfig telemetryConfig = new TelemetryConfig();
+    private int state = 0;
+            //0=configs, 1=test points, 2=server selection, 3=ready, 4=testing, 5=finished
 
-    private Object mutex=new Object();
+    private Object mutex = new Object();
 
-    private String originalExtra="";
+    private String originalExtra = "";
 
-    public Speedtest(){
+    public Speedtest() {
 
     }
 
-    public void setSpeedtestConfig(SpeedtestConfig c){
-        synchronized (mutex){
-            if(state!=0) throw new IllegalStateException("Cannot change config at this moment");
-            config=c.clone();
-            String extra=config.getTelemetry_extra();
-            if(extra!=null&&!extra.isEmpty()) originalExtra=extra;
+    public void setSpeedtestConfig(SpeedtestConfig c) {
+        synchronized (mutex) {
+            if (state != 0) throw new IllegalStateException("Cannot change config at this moment");
+            config = c.clone();
+            String extra = config.getTelemetry_extra();
+            if (extra != null && !extra.isEmpty()) originalExtra = extra;
         }
     }
 
-    public void setTelemetryConfig(TelemetryConfig c){
+    public void setTelemetryConfig(TelemetryConfig c) {
         synchronized (mutex) {
             if (state != 0) throw new IllegalStateException("Cannot change config at this moment");
             telemetryConfig = c.clone();
         }
     }
 
-    public void addTestPoint(TestPoint t){
+    public void addTestPoint(TestPoint t) {
         synchronized (mutex) {
             if (state == 0) state = 1;
             if (state > 1) throw new IllegalStateException("Cannot add test points at this moment");
@@ -54,80 +55,90 @@ public class Speedtest {
         }
     }
 
-    public void addTestPoints(TestPoint[] s){
+    public void addTestPoints(TestPoint[] s) {
         synchronized (mutex) {
             for (TestPoint t : s) addTestPoint(t);
         }
     }
 
-    public void addTestPoint(JSONObject json){
+    public void addTestPoint(JSONObject json) {
         synchronized (mutex) {
             addTestPoint(new TestPoint(json));
         }
     }
 
 
-
     private static class ServerListLoader {
-        private static String read(String url){
-            try{
-                URL u=new URL(url);
-                InputStream in=u.openStream();
-                BufferedReader br=new BufferedReader(new InputStreamReader(u.openStream()));
-                String s="";
-                try{
-                    for(;;){
-                        String r=br.readLine();
-                        if(r==null) break; else s+=r;
+        private static String read(String url) {
+            try {
+                URL u = new URL(url);
+                InputStream in = u.openStream();
+                BufferedReader br = new BufferedReader(new InputStreamReader(u.openStream()));
+                String s = "";
+                try {
+                    for (; ; ) {
+                        String r = br.readLine();
+                        if (r == null) {
+                            break;
+                        } else {
+                            s += r;
+                        }
                     }
-                }catch(Throwable t){}
+                } catch (Throwable t) {
+                }
                 br.close();
                 in.close();
                 return s;
-            }catch(Throwable t){
+            } catch (Throwable t) {
                 return null;
             }
         }
 
-        public static TestPoint[] loadServerList(String url){
-            try{
-                String s=null;
-                if(url.startsWith("//")){
-                    s=read("https:"+url);
-                    if(s==null) s=read("http:"+url);
-                }else s=read(url);
-                if(s==null) throw new Exception("Failed");
-                JSONArray a=new JSONArray(s);
-                ArrayList<TestPoint> ret=new ArrayList<>();
-                for(int i=0;i<a.length();i++){
+        public static TestPoint[] loadServerList(String url) {
+            try {
+                String s = null;
+                if (url.startsWith("//")) {
+                    s = read("https:" + url);
+                    if (s == null) s = read("http:" + url);
+                } else {
+                    s = read(url);
+                }
+                if (s == null) throw new Exception("Failed");
+                JSONArray a = new JSONArray(s);
+                ArrayList<TestPoint> ret = new ArrayList<>();
+                for (int i = 0; i < a.length(); i++) {
                     ret.add(new TestPoint(a.getJSONObject(i)));
                 }
                 return ret.toArray(new TestPoint[0]);
-            }catch(Throwable t){
+            } catch (Throwable t) {
                 return null;
             }
         }
     }
-    public boolean loadServerList(String url){
+
+    public boolean loadServerList(String url) {
         synchronized (mutex) {
             if (state == 0) state = 1;
             if (state > 1) throw new IllegalStateException("Cannot add test points at this moment");
-            TestPoint[] pts= ServerListLoader.loadServerList(url);
-            if(pts!=null){
+            TestPoint[] pts = ServerListLoader.loadServerList(url);
+            if (pts != null) {
                 addTestPoints(pts);
                 return true;
-            }else return false;
+            } else {
+                return false;
+            }
         }
     }
 
-    public TestPoint[] getTestPoints(){
+    public TestPoint[] getTestPoints() {
         synchronized (mutex) {
             return servers.toArray(new TestPoint[0]);
         }
     }
 
-    private ServerSelector ss=null;
-    public void selectServer(final ServerSelectedHandler callback){
+    private ServerSelector ss = null;
+
+    public void selectServer(final ServerSelectedHandler callback) {
         synchronized (mutex) {
             if (state == 0) throw new IllegalStateException("No test points added");
             if (state == 2) throw new IllegalStateException("Server selection is in progress");
@@ -138,7 +149,11 @@ public class Speedtest {
                 public void onServerSelected(TestPoint server) {
                     selectedServer = server;
                     synchronized (mutex) {
-                        if (server != null) state = 3; else state = 1;
+                        if (server != null) {
+                            state = 3;
+                        } else {
+                            state = 1;
+                        }
                     }
                     callback.onServerSelected(server);
                 }
@@ -147,7 +162,7 @@ public class Speedtest {
         }
     }
 
-    public void setSelectedServer(TestPoint t){
+    public void setSelectedServer(TestPoint t) {
         synchronized (mutex) {
             if (state == 2) throw new IllegalStateException("Server selection is in progress");
             if (t == null) throw new IllegalArgumentException("t is null");
@@ -156,16 +171,18 @@ public class Speedtest {
         }
     }
 
-    private SpeedtestWorker st=null;
-    public void start(final SpeedtestHandler callback){
+    private SpeedtestWorker st = null;
+
+    public void start(final SpeedtestHandler callback) {
         synchronized (mutex) {
             if (state < 3) throw new IllegalStateException("Server hasn't been selected yet");
             if (state == 4) throw new IllegalStateException("Test already running");
             state = 4;
             try {
                 JSONObject extra = new JSONObject();
-                if (originalExtra != null && !originalExtra.isEmpty())
+                if (originalExtra != null && !originalExtra.isEmpty()) {
                     extra.put("extra", originalExtra);
+                }
                 extra.put("server", selectedServer.getName());
                 config.setTelemetry_extra(extra.toString());
             } catch (Throwable t) {
@@ -193,9 +210,9 @@ public class Speedtest {
 
                 @Override
                 public void onTestIDReceived(String id) {
-                    String shareURL=prepareShareURL(telemetryConfig);
-                    if(shareURL!=null) shareURL= String.format(shareURL,id);
-                    callback.onTestIDReceived(id,shareURL);
+                    String shareURL = prepareShareURL(telemetryConfig);
+                    if (shareURL != null) shareURL = String.format(shareURL, id);
+                    callback.onTestIDReceived(id, shareURL);
                 }
 
                 @Override
@@ -217,17 +234,19 @@ public class Speedtest {
         }
     }
 
-    private String prepareShareURL(TelemetryConfig c){
-        if(c==null) return null;
-        String server=c.getServer(), shareURL=c.getShareURL();
-        if(server==null||server.isEmpty()||shareURL==null||shareURL.isEmpty()) return null;
-        if(!server.endsWith("/")) server=server+"/";
-        while(shareURL.startsWith("/")) shareURL=shareURL.substring(1);
-        if(server.startsWith("//")) server="https:"+server;
-        return server+shareURL;
+    private String prepareShareURL(TelemetryConfig c) {
+        if (c == null) return null;
+        String server = c.getServer(), shareURL = c.getShareURL();
+        if (server == null || server.isEmpty() || shareURL == null || shareURL.isEmpty()) {
+            return null;
+        }
+        if (!server.endsWith("/")) server = server + "/";
+        while (shareURL.startsWith("/")) shareURL = shareURL.substring(1);
+        if (server.startsWith("//")) server = "https:" + server;
+        return server + shareURL;
     }
 
-    public void abort(){
+    public void abort() {
         synchronized (mutex) {
             if (state == 2) ss.stopASAP();
             if (state == 4) st.abort();
@@ -235,16 +254,23 @@ public class Speedtest {
         }
     }
 
-    public static abstract class ServerSelectedHandler{
+    public static abstract class ServerSelectedHandler {
         public abstract void onServerSelected(TestPoint server);
     }
-    public static abstract class SpeedtestHandler{
+
+    public static abstract class SpeedtestHandler {
         public abstract void onDownloadUpdate(double dl, double progress);
+
         public abstract void onUploadUpdate(double ul, double progress);
+
         public abstract void onPingJitterUpdate(double ping, double jitter, double progress);
+
         public abstract void onIPInfoUpdate(String ipInfo);
+
         public abstract void onTestIDReceived(String id, String shareURL);
+
         public abstract void onEnd();
+
         public abstract void onCriticalFailure(String err);
     }
 }

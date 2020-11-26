@@ -34,10 +34,11 @@ public class CustomAdapter extends BaseAdapter {
     public long getItemId(int i) {
         return 0;
     }
+
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         view = inflter.inflate(R.layout.spinner_image, null);
-        ImageView icon =  view.findViewById(R.id.imageView);
+        ImageView icon = view.findViewById(R.id.imageView);
         icon.setImageResource(flags[i]);
         return view;
     }

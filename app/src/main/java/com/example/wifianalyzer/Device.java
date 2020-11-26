@@ -1,7 +1,7 @@
 package com.example.wifianalyzer;
 
 public class Device {
-    private String type_device,device,ip,mac,marque;
+    private String type_device, device, ip, mac, marque;
 
     public String getType_device() {
         return type_device;
@@ -30,6 +30,7 @@ public class Device {
         this.mac = mac;
         this.marque = marque;
     }
+
     public Device(String type_device, String device, String ip) {
         this.type_device = type_device;
         this.device = device;

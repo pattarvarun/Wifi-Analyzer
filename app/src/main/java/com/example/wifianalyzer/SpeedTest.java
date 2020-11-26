@@ -11,6 +11,7 @@ import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import fr.bmartel.speedtest.SpeedTestReport;
@@ -25,16 +26,17 @@ import java.util.Set;
 
 public class SpeedTest extends AppCompatActivity {
     SpeedTestAdapter speedTestAdapter;
-    private WaveLoadingView Download,Upload,mWaveLoadingView;
-    private TextView countdown,dk,uk,backtomenu,tryagain;
-    private Set<String > data;
+    private WaveLoadingView Download, Upload, mWaveLoadingView;
+    private TextView countdown, dk, uk, backtomenu, tryagain;
+    private Set<String> data;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_speed_test);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        backtomenu=findViewById(R.id.backtomenu);
-        tryagain=findViewById(R.id.tryagain);
+        backtomenu = findViewById(R.id.backtomenu);
+        tryagain = findViewById(R.id.tryagain);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -46,16 +48,16 @@ public class SpeedTest extends AppCompatActivity {
                 finish();
             }
         });
-        countdown=findViewById(R.id.countdown);
+        countdown = findViewById(R.id.countdown);
         toolbar.setTitle(getIntent().getExtras().getString("name_wifi"));
 
-        dk=findViewById(R.id.dk);
-        uk=findViewById(R.id.uk);
-        new CountDownTimer(3000,1000) {
+        dk = findViewById(R.id.dk);
+        uk = findViewById(R.id.uk);
+        new CountDownTimer(3000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                Toast.makeText(SpeedTest.this,""+millisUntilFinished,Toast.LENGTH_LONG).show();
-                countdown.setText(String.valueOf(millisUntilFinished/1000)+"s..");
+                Toast.makeText(SpeedTest.this, "" + millisUntilFinished, Toast.LENGTH_LONG).show();
+                countdown.setText(String.valueOf(millisUntilFinished / 1000) + "s..");
             }
 
             @Override
@@ -133,7 +135,8 @@ public class SpeedTest extends AppCompatActivity {
         Upload.startAnimation();
         // new SpeedTestTaskU().execute();
     }
-    private   class SpeedTestTaskD extends AsyncTask<Void, Void, Void> {
+
+    private class SpeedTestTaskD extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected Void doInBackground(Void... params) {
@@ -173,10 +176,12 @@ public class SpeedTest extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(SpeedTest.this, report.getSpeedTestMode().toString(), Toast.LENGTH_SHORT).show();
-                            mWaveLoadingView.setProgressValue( Math.round(percent));
-                            mWaveLoadingView.setCenterTitle(String.valueOf(percent)+"%");
-                            dk.setText("Ko/s :"+Math.round(report.getTransferRateOctet().intValue()/1024));
+                            Toast.makeText(SpeedTest.this, report.getSpeedTestMode().toString(),
+                                    Toast.LENGTH_SHORT).show();
+                            mWaveLoadingView.setProgressValue(Math.round(percent));
+                            mWaveLoadingView.setCenterTitle(String.valueOf(percent) + "%");
+                            dk.setText("Ko/s :" + Math.round(
+                                    report.getTransferRateOctet().intValue() / 1024));
                         }
                     });
                 }
@@ -186,7 +191,8 @@ public class SpeedTest extends AppCompatActivity {
             return null;
         }
     }
-    private class SpeedTestTaskU  extends AsyncTask<Void, Void, Void> {
+
+    private class SpeedTestTaskU extends AsyncTask<Void, Void, Void> {
 
 
         @Override
@@ -197,7 +203,7 @@ public class SpeedTest extends AppCompatActivity {
             speedTestSocket.addSpeedTestListener(new ISpeedTestListener() {
 
                 @Override
-                public void onCompletion ( final SpeedTestReport report){
+                public void onCompletion(final SpeedTestReport report) {
                     // called when download/upload is finished
                     runOnUiThread(new Runnable() {
                         @Override
@@ -210,7 +216,7 @@ public class SpeedTest extends AppCompatActivity {
                 }
 
                 @Override
-                public void onError (SpeedTestError speedTestError,final String errorMessage){
+                public void onError(SpeedTestError speedTestError, final String errorMessage) {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -221,28 +227,31 @@ public class SpeedTest extends AppCompatActivity {
                 }
 
                 @Override
-                public void onProgress ( final float percent, final SpeedTestReport report){
+                public void onProgress(final float percent, final SpeedTestReport report) {
                     // called to notify download/upload progress
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(SpeedTest.this, report.getSpeedTestMode().toString(), Toast.LENGTH_SHORT).show();
-                            Upload.setProgressValue( Math.round(percent));
-                            Upload.setCenterTitle(String.valueOf(percent)+"%");
+                            Toast.makeText(SpeedTest.this, report.getSpeedTestMode().toString(),
+                                    Toast.LENGTH_SHORT).show();
+                            Upload.setProgressValue(Math.round(percent));
+                            Upload.setCenterTitle(String.valueOf(percent) + "%");
 
-                            uk.setText(Math.round(report.getTransferRateOctet().intValue()/1024)+" Ko/s");
+                            uk.setText(Math.round(report.getTransferRateOctet().intValue() / 1024)
+                                    + " Ko/s");
 
                         }
                     });
                 }
             });
-            speedTestSocket.startUpload("http://ipv4.ikoula.testdebit.info/",4000000);
+            speedTestSocket.startUpload("http://ipv4.ikoula.testdebit.info/", 4000000);
 
             return null;
         }
 
     }
-    private void saveToDB(String name,float d,float u,Date date) {
+
+    private void saveToDB(String name, float d, float u, Date date) {
         SQLiteDatabase database = new SampleSQLiteDBHelper(this).getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(SampleSQLiteDBHelper.PERSON_COLUMN_NAME, name);

@@ -29,16 +29,17 @@ import static android.os.Looper.getMainLooper;
  * Use the {@link com.example.wifianalyzer.DeviceList#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DeviceList extends Fragment implements WifiP2pManager.PeerListListener, WifiP2pManager.ChannelListener {
+public class DeviceList extends Fragment implements WifiP2pManager.PeerListListener,
+        WifiP2pManager.ChannelListener {
     RecyclerView recyclerView;
-    List<com.example.wifianalyzer.Device> list=new ArrayList<>();
+    List<com.example.wifianalyzer.Device> list = new ArrayList<>();
     WifiP2pManager manager;
     WifiP2pManager.Channel channel;
-    IntentFilter intentFilter= new IntentFilter();
+    IntentFilter intentFilter = new IntentFilter();
     private List<WifiP2pDevice> peers = new ArrayList<WifiP2pDevice>();
 
     private WifiP2pDevice device;
-    BroadcastReceiver receiver,mWifiScanReceiver;
+    BroadcastReceiver receiver, mWifiScanReceiver;
     DeviceListAdapter deviceListAdapter;
     private List _peers = new ArrayList();
     private BroadcastReceiver _broadcastReceiver = null;
@@ -89,38 +90,42 @@ public class DeviceList extends Fragment implements WifiP2pManager.PeerListListe
         intentFilter.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
 
 
-
     }
+
     @Override
     public void onResume() {
         super.onResume();
-     //   Toast.makeText(getContext(), "No  found",Toast.LENGTH_LONG).show();
+        //   Toast.makeText(getContext(), "No  found",Toast.LENGTH_LONG).show();
 
-        _broadcastReceiver = new WiFiDirectBroadcastReceiver(manager, channel, this, _peerListListener);
+        _broadcastReceiver = new WiFiDirectBroadcastReceiver(manager, channel, this,
+                _peerListListener);
         getContext().registerReceiver(mWifiScanReceiver, intentFilter);
     }
+
     @Override
     public void onStart() {
         super.onStart();
         Toast.makeText(getContext(), "On start", Toast.LENGTH_LONG).show();
 
-        _broadcastReceiver = new WiFiDirectBroadcastReceiver(manager, channel, this, _peerListListener);
+        _broadcastReceiver = new WiFiDirectBroadcastReceiver(manager, channel, this,
+                _peerListListener);
         getContext().registerReceiver(mWifiScanReceiver, intentFilter);
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root= inflater.inflate(R.layout.fragment_device_list, container, false);
-        TextView name,number_devices;
-        name=root.findViewById(R.id.name_wifi);
-        number_devices=root.findViewById(R.id.number_devices);
-        recyclerView=root.findViewById(R.id.liste_device);
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
+        View root = inflater.inflate(R.layout.fragment_device_list, container, false);
+        TextView name, number_devices;
+        name = root.findViewById(R.id.name_wifi);
+        number_devices = root.findViewById(R.id.number_devices);
+        recyclerView = root.findViewById(R.id.liste_device);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         manager = (WifiP2pManager) getContext().getSystemService(Context.WIFI_P2P_SERVICE);
-        channel =  manager.initialize(getContext(), getMainLooper(), this);
-        receiver = new WiFiDirectBroadcastReceiver(manager, channel, this,_peerListListener);
+        channel = manager.initialize(getContext(), getMainLooper(), this);
+        receiver = new WiFiDirectBroadcastReceiver(manager, channel, this, _peerListListener);
         intentFilter = new IntentFilter();
         intentFilter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
         intentFilter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
@@ -128,7 +133,7 @@ public class DeviceList extends Fragment implements WifiP2pManager.PeerListListe
         intentFilter.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
         manager = (WifiP2pManager) getContext().getSystemService(Context.WIFI_P2P_SERVICE);
         channel = manager.initialize(getContext(), getMainLooper(), this);
-        if (channel==null){
+        if (channel == null) {
             Toast.makeText(getContext(), "channel nul", Toast.LENGTH_LONG).show();
 
         }
@@ -137,27 +142,33 @@ public class DeviceList extends Fragment implements WifiP2pManager.PeerListListe
             @Override
             public void onPeersAvailable(WifiP2pDeviceList wifiP2pDeviceList) {
 
-                for (WifiP2pDevice device : wifiP2pDeviceList.getDeviceList())
-                {
-                    Toast.makeText(getContext(),wifiP2pDeviceList.getDeviceList().size()+"jajajajaj", Toast.LENGTH_LONG).show();
-peers.add(device);
-                    list.add(new com.example.wifianalyzer.Device(device.primaryDeviceType,device.deviceName,device.deviceAddress));
+                for (WifiP2pDevice device : wifiP2pDeviceList.getDeviceList()) {
+                    Toast.makeText(getContext(),
+                            wifiP2pDeviceList.getDeviceList().size() + "jajajajaj",
+                            Toast.LENGTH_LONG).show();
+                    peers.add(device);
+                    list.add(new com.example.wifianalyzer.Device(device.primaryDeviceType,
+                            device.deviceName, device.deviceAddress));
 
-                    if (device.deviceName.equals("ABC"))
-                        Toast.makeText(getContext(), "widi"+wifiP2pDeviceList.getDeviceList().size(), Toast.LENGTH_LONG).show();
+                    if (device.deviceName.equals("ABC")) {
+                        Toast.makeText(getContext(),
+                                "widi" + wifiP2pDeviceList.getDeviceList().size(),
+                                Toast.LENGTH_LONG).show();
+                    }
                     // device.deviceName
                 }
             }
         });
-      //  Toast.makeText(getContext(), "jaja"+list.get(0).getDevice(),Toast.LENGTH_LONG).show();
+        //  Toast.makeText(getContext(), "jaja"+list.get(0).getDevice(),Toast.LENGTH_LONG).show();
 
 
-        deviceListAdapter=new DeviceListAdapter(getContext(),list);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
+        deviceListAdapter = new DeviceListAdapter(getContext(), list);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
+                recyclerView.getContext(),
                 linearLayoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
         recyclerView.setAdapter(deviceListAdapter);
-         List<WifiP2pDevice> peers = new ArrayList<WifiP2pDevice>();
+        List<WifiP2pDevice> peers = new ArrayList<WifiP2pDevice>();
 
         return root;
     }
@@ -173,7 +184,8 @@ peers.add(device);
 
         peers.clear();
         peers.addAll(peerList.getDeviceList());
-        Toast.makeText(getContext(),peerList.getDeviceList().size()+"jajajajaj", Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), peerList.getDeviceList().size() + "jajajajaj",
+                Toast.LENGTH_LONG).show();
 
         ((DeviceListAdapter) deviceListAdapter).notifyDataSetChanged();
         if (peers.size() == 0) {

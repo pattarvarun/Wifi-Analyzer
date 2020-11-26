@@ -17,7 +17,7 @@ public class GaugeView extends View {
     private int startAngle;
     private int angles;
     private int maxValue;
-    private int value=0;
+    private int value = 0;
 
     public GaugeView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -34,18 +34,22 @@ public class GaugeView extends View {
         super(context);
     }
 
-    private Paint paint=null;
-    private RectF rect=null;
+    private Paint paint = null;
+    private RectF rect = null;
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        float size = getWidth()<getHeight() ? getWidth() : getHeight();
-        float w = size - (2*strokeWidth);
-        float h = size - (2*strokeWidth);
-        float radius = (w < h ? w/2 : h/2);
-        if(rect==null) rect = new RectF();
-        rect.set((getWidth() - (2*strokeWidth))/2 - radius + strokeWidth, (getHeight() - (2*strokeWidth))/2 - radius + strokeWidth, (getWidth() - (2*strokeWidth))/2 - radius + strokeWidth + w, (getHeight() - (2*strokeWidth))/2 - radius + strokeWidth + h);
-        if(paint==null) paint = new Paint();
+        float size = getWidth() < getHeight() ? getWidth() : getHeight();
+        float w = size - (2 * strokeWidth);
+        float h = size - (2 * strokeWidth);
+        float radius = (w < h ? w / 2 : h / 2);
+        if (rect == null) rect = new RectF();
+        rect.set((getWidth() - (2 * strokeWidth)) / 2 - radius + strokeWidth,
+                (getHeight() - (2 * strokeWidth)) / 2 - radius + strokeWidth,
+                (getWidth() - (2 * strokeWidth)) / 2 - radius + strokeWidth + w,
+                (getHeight() - (2 * strokeWidth)) / 2 - radius + strokeWidth + h);
+        if (paint == null) paint = new Paint();
         paint.setStrokeWidth(strokeWidth);
         paint.setAntiAlias(true);
         paint.setStyle(Paint.Style.STROKE);
@@ -53,7 +57,8 @@ public class GaugeView extends View {
         paint.setColor(backgroundColor);
         canvas.drawArc(rect, startAngle, angles, false, paint);
         paint.setColor(fillColor);
-        canvas.drawArc(rect, startAngle, (float)((startAngle + value *((double) Math.abs(angles) / maxValue))- startAngle), false, paint);
+        canvas.drawArc(rect, startAngle, (float) ((startAngle + value * ((double) Math.abs(angles)
+                / maxValue)) - startAngle), false, paint);
     }
 
     public void setValue(int value) {

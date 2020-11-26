@@ -18,13 +18,14 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
     private List _peers = new ArrayList();
 
     WifiP2pManager.PeerListListener _peerListListener;
+
     public WiFiDirectBroadcastReceiver(WifiP2pManager manager, WifiP2pManager.Channel channel,
-                                       DeviceList activity, WifiP2pManager.PeerListListener peerListListener) {
+            DeviceList activity, WifiP2pManager.PeerListListener peerListListener) {
         super();
         this.manager = manager;
         this.channel = channel;
         this.activity = activity;
-        this._peerListListener=peerListListener;
+        this._peerListListener = peerListListener;
         manager.discoverPeers(channel, new WifiP2pManager.ActionListener() {
             @Override
             public void onSuccess() {
@@ -55,18 +56,15 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
                 Log.d("wifi", "WIFI DIRECT OFF");
             }
 
-        }
-        else if (WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION.equals(action)) {
+        } else if (WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION.equals(action)) {
             Log.d("wifi", "Peers changed");
             if (manager != null) {
                 manager.requestPeers(channel, _peerListListener);
             }
 
-        }
-        else if (WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION.equals(action)) {
+        } else if (WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION.equals(action)) {
             // Respond to new connection or disconnections
-        }
-        else if (WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION.equals(action)) {
+        } else if (WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION.equals(action)) {
             // Respond to this device's wifi state changing
         }
 

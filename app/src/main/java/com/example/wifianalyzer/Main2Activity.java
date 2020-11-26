@@ -12,10 +12,11 @@ public class Main2Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_radioview);
-        mRadarView=findViewById(R.id.radarView);
+        mRadarView = findViewById(R.id.radarView);
         mRadarView.setFrameRate(1000);
         mRadarView.setShowCircles(true);
-        mRadarView.setShowPoints(true);    }
+        mRadarView.setShowPoints(true);
+    }
 
     public void stopAnimation(View view) {
         if (mRadarView != null) mRadarView.stopAnimation();

@@ -7,8 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.internet_speed_testing.ProgressionModel;
 import com.example.wifianalyzer.ui.frag2.ListwifiAdapter;
 
@@ -28,6 +30,7 @@ public class SpeedTestAdapter extends RecyclerView.Adapter<SpeedTestAdapter.View
         this.mInflater = LayoutInflater.from(context);
         this.list = list;
     }
+
     public SpeedTestAdapter(Context context, Cursor cursor) {
         this.mInflater = LayoutInflater.from(context);
         this.cursor = cursor;
@@ -42,18 +45,17 @@ public class SpeedTestAdapter extends RecyclerView.Adapter<SpeedTestAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull SpeedTestAdapter.ViewHolder holder, int position) {
-        if (list!=null) {
+        if (list != null) {
             SpeedTest_ speedTest_ = list.get(position);
 
             holder.date.setText(list.get(position).getDate());
             holder.upload.setText(list.get(position).getUpload());
             holder.download.setText(list.get(position).getDownload());
             holder.namewifi.setText(speedTest_.getNamewifi());
-            holder.number.setText(""+position);
-        }
-        else{
+            holder.number.setText("" + position);
+        } else {
 
-            while(cursor.moveToNext()) {
+            while (cursor.moveToNext()) {
                 int index;
 
                 index = cursor.getColumnIndexOrThrow(SampleSQLiteDBHelper.PERSON_COLUMN_NAME);
@@ -77,7 +79,7 @@ public class SpeedTestAdapter extends RecyclerView.Adapter<SpeedTestAdapter.View
 
     @Override
     public int getItemCount() {
-        if (list==null){
+        if (list == null) {
             return cursor.getCount();
         }
         return list.size();
@@ -97,11 +99,11 @@ public class SpeedTestAdapter extends RecyclerView.Adapter<SpeedTestAdapter.View
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView download,upload, date, namewifi,number;
+        TextView download, upload, date, namewifi, number;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            number=itemView.findViewById(R.id.number);
+            number = itemView.findViewById(R.id.number);
             download = itemView.findViewById(R.id.download);
             namewifi = itemView.findViewById(R.id.wifi_name);
             upload = itemView.findViewById(R.id.upload);

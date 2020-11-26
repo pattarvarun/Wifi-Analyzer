@@ -20,26 +20,26 @@ public class RadarView extends View {
 
     private final String LOG = "RadarView";
     private final int POINT_ARRAY_SIZE = 35;
-private boolean showPoint=false;
+    private boolean showPoint = false;
     private int fps = 200;
     private Drawable mImage;
 
     private boolean showCircles = true;
-private boolean showMetres=true;
-private int rayon=15;
-private int dis=0;
-private String nameNetwork="";
-private String encry="";
-private String Adresse="";
-private String name="";
-private int channel=0;
-private String mac="";
-private int dbm=0;
-private List<WifiInfo_> list=new ArrayList<>();
-    private List<WifiInfo_> list1=new ArrayList<>();
-    private List<Point> positions=new ArrayList<>();
-private int longitude=0;
-private boolean showNetwork=false;
+    private boolean showMetres = true;
+    private int rayon = 15;
+    private int dis = 0;
+    private String nameNetwork = "";
+    private String encry = "";
+    private String Adresse = "";
+    private String name = "";
+    private int channel = 0;
+    private String mac = "";
+    private int dbm = 0;
+    private List<WifiInfo_> list = new ArrayList<>();
+    private List<WifiInfo_> list1 = new ArrayList<>();
+    private List<Point> positions = new ArrayList<>();
+    private int longitude = 0;
+    private boolean showNetwork = false;
     private static final int INVALID_POINTER_ID = -1;
 
     private float mPosX;
@@ -69,7 +69,7 @@ private boolean showNetwork=false;
         super(context, attrs, defStyleAttr);
         mImage = getResources().getDrawable(R.drawable.ic_wifi_black_48dp);
 
-        this.context=context;
+        this.context = context;
         mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
 
 
@@ -83,9 +83,9 @@ private boolean showNetwork=false;
         localPaint.setAlpha(0);
 
         int alpha_step = 255 / POINT_ARRAY_SIZE;
-        for (int i=0; i < latestPaint.length; i++) {
+        for (int i = 0; i < latestPaint.length; i++) {
             latestPaint[i] = new Paint(localPaint);
-            latestPaint[i].setAlpha(255 - (i* alpha_step));
+            latestPaint[i].setAlpha(255 - (i * alpha_step));
         }
     }
 
@@ -109,18 +109,36 @@ private boolean showNetwork=false;
         mHandler.removeCallbacks(mTick);
     }
 
-    public void setFrameRate(int fps) { this.fps = fps; }
-    public int getFrameRate() { return this.fps; };
-public void setShowPoints(boolean showPoint){this.showPoint=showPoint;}
-    public void setShowCircles(boolean showCircles) { this.showCircles = showCircles; }
-    public void setShowMetres(boolean showMetres) { this.showMetres = showMetres; }
-public void setRayon(int rayon){this.rayon=rayon;}
-public void setShowNetwork(boolean showNetwork, List<WifiInfo_> list){
-    this.showNetwork=showNetwork;
-this.list=list;
-}
+    public void setFrameRate(int fps) {
+        this.fps = fps;
+    }
 
+    public int getFrameRate() {
+        return this.fps;
+    }
 
+    ;
+
+    public void setShowPoints(boolean showPoint) {
+        this.showPoint = showPoint;
+    }
+
+    public void setShowCircles(boolean showCircles) {
+        this.showCircles = showCircles;
+    }
+
+    public void setShowMetres(boolean showMetres) {
+        this.showMetres = showMetres;
+    }
+
+    public void setRayon(int rayon) {
+        this.rayon = rayon;
+    }
+
+    public void setShowNetwork(boolean showNetwork, List<WifiInfo_> list) {
+        this.showNetwork = showNetwork;
+        this.list = list;
+    }
 
 
     @Override
@@ -198,7 +216,9 @@ this.list=list;
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-int r_1=100;int r_2=200;int r_3=300;
+        int r_1 = 100;
+        int r_2 = 200;
+        int r_3 = 300;
         int width = getWidth();
         int height = getHeight();
 
@@ -207,150 +227,147 @@ int r_1=100;int r_2=200;int r_3=300;
 
         //canvas.drawRect(0, 0, getWidth(), getHeight(), localPaint);
 
-        int i = (r) /2;
-        int j = r/2 - 1;
-        int g=i;
+        int i = (r) / 2;
+        int j = r / 2 - 1;
+        int g = i;
         Paint localPaint = latestPaint[0];
-        if(showPoint){
-            Paint paint=new Paint();
+        if (showPoint) {
+            Paint paint = new Paint();
             paint.setColor(Color.GREEN);
-            canvas.drawCircle(i,j,10,paint);
+            canvas.drawCircle(i, j, 10, paint);
         }
         if (showCircles) {
 
             //canvas.drawCircle(i, g, (float) (j*1.25), localPaint);
 
             Paint localPaint1 = new Paint();
-            localPaint1.setColor(Color.rgb(0,191,255));
+            localPaint1.setColor(Color.rgb(0, 191, 255));
 
             localPaint1.setStrokeWidth(70.0f);
             localPaint1.setAntiAlias(true);
 
             localPaint1.setStyle(Paint.Style.STROKE);
-            canvas.drawCircle(i, g, j-35, localPaint1);
-            canvas.drawCircle(i, g, (j * 3 / 4)-35, localPaint1);
-            canvas.drawCircle(i, g, (j >> 1)-35, localPaint1);
-            canvas.drawCircle(i, g, (j >> 2)-35 , localPaint1);
-            if(showMetres){
-                Paint paint=new Paint();
+            canvas.drawCircle(i, g, j - 35, localPaint1);
+            canvas.drawCircle(i, g, (j * 3 / 4) - 35, localPaint1);
+            canvas.drawCircle(i, g, (j >> 1) - 35, localPaint1);
+            canvas.drawCircle(i, g, (j >> 2) - 35, localPaint1);
+            if (showMetres) {
+                Paint paint = new Paint();
                 paint.setColor(Color.GREEN);
                 paint.setTextSize(40);
-                canvas.drawText(rayon+"m",i,g+10,paint);
-                canvas.drawText(rayon*2+"m",i,g-r_1,paint);
-                canvas.drawText(rayon*3+"m",i,g-r_2,paint);
-                canvas.drawText(rayon*4+"m",i,g-r_3,paint);
+                canvas.drawText(rayon + "m", i, g + 10, paint);
+                canvas.drawText(rayon * 2 + "m", i, g - r_1, paint);
+                canvas.drawText(rayon * 3 + "m", i, g - r_2, paint);
+                canvas.drawText(rayon * 4 + "m", i, g - r_3, paint);
 
             }
         }// GREEN
-        if(showNetwork){
-            Paint paint=new Paint();
+        if (showNetwork) {
+            Paint paint = new Paint();
             paint.setColor(Color.GREEN);
             paint.setTextSize(30);
-            for (int k=0;k<list.size();k++){
-                dis=list.get(k).getDistance();
-                nameNetwork=list.get(k).getName();
-encry=list.get(k).getEncry();
-channel=list.get(k).getChannel();
-Adresse=list.get(k).getAddresse();
-mac=list.get(k).getBssid();
-dbm=list.get(k).getDmb();
+            for (int k = 0; k < list.size(); k++) {
+                dis = list.get(k).getDistance();
+                nameNetwork = list.get(k).getName();
+                encry = list.get(k).getEncry();
+                channel = list.get(k).getChannel();
+                Adresse = list.get(k).getAddresse();
+                mac = list.get(k).getBssid();
+                dbm = list.get(k).getDmb();
 
-                if (rayon==15){
-                    if(dis<15 && dis>0){
-                        int Min=i-30;
-                        int Max=i-50;
-                        int nombreAleatoirex = Min + (int)(Math.random() * ((Max - Min) + 1));
-                         Min=g-10;
-                         Max=g+10;
-                        int nombreAleatoirey = Min + (int)(Math.random() * ((Max - Min) + 1));
+                if (rayon == 15) {
+                    if (dis < 15 && dis > 0) {
+                        int Min = i - 30;
+                        int Max = i - 50;
+                        int nombreAleatoirex = Min + (int) (Math.random() * ((Max - Min) + 1));
+                        Min = g - 10;
+                        Max = g + 10;
+                        int nombreAleatoirey = Min + (int) (Math.random() * ((Max - Min) + 1));
                         //Toast.makeText(context,"jajaa1 ",Toast.LENGTH_SHORT).show();
 
-                        mImage.setBounds(0,0,60,60);
-canvas.translate(i-240,g-10);
-positions.add(new Point(i-240,g-10));
+                        mImage.setBounds(0, 0, 60, 60);
+                        canvas.translate(i - 240, g - 10);
+                        positions.add(new Point(i - 240, g - 10));
                         mImage.draw(canvas);
-                        canvas.translate(-(i-240),-(g-10));
+                        canvas.translate(-(i - 240), -(g - 10));
                         //canvas.drawCircle(nombreAleatoirex,nombreAleatoirey,17,paint);
-                        canvas.drawText(nameNetwork,i-240,g-30,paint);
+                        canvas.drawText(nameNetwork, i - 240, g - 30, paint);
 
                     }
-                    if(dis<30 && dis>15){
-                        int Min=i-15;
-                        int Max=i-65;
-                        int nombreAleatoirex = Min + (int)(Math.random() * ((Max - Min) + 1));
-                        Min=g-r_2-70;
-                        Max=g-r_2+70;
-                        int nombreAleatoirey = Min + (int)(Math.random() * ((Max - Min) + 1));
+                    if (dis < 30 && dis > 15) {
+                        int Min = i - 15;
+                        int Max = i - 65;
+                        int nombreAleatoirex = Min + (int) (Math.random() * ((Max - Min) + 1));
+                        Min = g - r_2 - 70;
+                        Max = g - r_2 + 70;
+                        int nombreAleatoirey = Min + (int) (Math.random() * ((Max - Min) + 1));
                         //Toast.makeText(context,"jajaa2 ",Toast.LENGTH_LONG).show();
 
-                        mImage.setBounds(0,0,60,60);
-                        canvas.translate(i-40,r_1-10);
-                        positions.add(new Point(i-40,r_1-10));
+                        mImage.setBounds(0, 0, 60, 60);
+                        canvas.translate(i - 40, r_1 - 10);
+                        positions.add(new Point(i - 40, r_1 - 10));
 
                         mImage.draw(canvas);
-                        canvas.translate(-(i-40),-(r_1-10));
+                        canvas.translate(-(i - 40), -(r_1 - 10));
 
                         // canvas.drawCircle(nombreAleatoirex,nombreAleatoirey,17,paint);
-                        canvas.drawText(nameNetwork,i-240,r_1-30,paint);
+                        canvas.drawText(nameNetwork, i - 240, r_1 - 30, paint);
 
                     }
-                    if(dis<45 && dis>30){
-                        mImage.setBounds(0,0,60,60);
-                        canvas.translate(i-40,r_2-10);
-                        positions.add(new Point(i-40,r_2-10));
+                    if (dis < 45 && dis > 30) {
+                        mImage.setBounds(0, 0, 60, 60);
+                        canvas.translate(i - 40, r_2 - 10);
+                        positions.add(new Point(i - 40, r_2 - 10));
 
                         mImage.draw(canvas);
-                        canvas.translate(-(i-40),-(r_2-10));
+                        canvas.translate(-(i - 40), -(r_2 - 10));
 
                         //canvas.drawCircle(i-40,r_2,17,paint);
-                        canvas.drawText(nameNetwork,i-240,r_2-30,paint);
+                        canvas.drawText(nameNetwork, i - 240, r_2 - 30, paint);
 
-                        }
+                    }
 
-                    if(dis<60 && dis>45){
-                        mImage.setBounds(0,0,60,60);
-                        canvas.translate(i-250,r_3);
-                        positions.add(new Point(i-240,r_3));
+                    if (dis < 60 && dis > 45) {
+                        mImage.setBounds(0, 0, 60, 60);
+                        canvas.translate(i - 250, r_3);
+                        positions.add(new Point(i - 240, r_3));
 
                         mImage.draw(canvas);
-                        canvas.translate(-(i-250),-r_3);
-                        canvas.drawText(nameNetwork,i-240,r_3-30,paint);
+                        canvas.translate(-(i - 250), -r_3);
+                        canvas.drawText(nameNetwork, i - 240, r_3 - 30, paint);
 
                     }
                 }
-               if (rayon==100){
-                   if(dis<100 && dis>50){
-                       mImage.setBounds(0,0,60,60);
-                       mImage.draw(canvas);
-                       canvas.drawText(nameNetwork,i-240,r_3-30,paint);
+                if (rayon == 100) {
+                    if (dis < 100 && dis > 50) {
+                        mImage.setBounds(0, 0, 60, 60);
+                        mImage.draw(canvas);
+                        canvas.drawText(nameNetwork, i - 240, r_3 - 30, paint);
 
-                       //canvas.drawCircle(i-40,r_3,17,paint);
-                   }
-               }
-               if (rayon==150){
+                        //canvas.drawCircle(i-40,r_3,17,paint);
+                    }
+                }
+                if (rayon == 150) {
 
-               }
-
+                }
 
 
             }
 
         }
-
 
 
         alpha -= 0.5;
         if (alpha < -360) alpha = 0;
         double angle = Math.toRadians(alpha);
-        int offsetX =  (int) (i + (float)(i * Math.cos(angle)));
-        int offsetY = (int) (i - (float)(i * Math.sin(angle)));
+        int offsetX = (int) (i + (float) (i * Math.cos(angle)));
+        int offsetY = (int) (i - (float) (i * Math.sin(angle)));
 
-        latestPoint[0]= new Point(offsetX, offsetY);
+        latestPoint[0] = new Point(offsetX, offsetY);
 
-        for (int x=POINT_ARRAY_SIZE-1; x > 0; x--) {
-            latestPoint[x] = latestPoint[x-1];
+        for (int x = POINT_ARRAY_SIZE - 1; x > 0; x--) {
+            latestPoint[x] = latestPoint[x - 1];
         }
-
 
 
         int lines = 0;
@@ -381,6 +398,7 @@ positions.add(new Point(i-240,g-10));
 
 
     }
+
     private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
         @Override
         public boolean onScale(ScaleGestureDetector detector) {

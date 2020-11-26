@@ -29,12 +29,12 @@ import java.util.List;
 
 public class Navigation extends AppCompatActivity implements SensorEventListener {
 
-NavigationView navigationView=null;
-Toolbar toolbar;
+    NavigationView navigationView = null;
+    Toolbar toolbar;
     LocationRequest locationRequest;
     LocationCallback locationCallback;
-    private static final int PERMISSION_FINE_LOCATION =100 ;
-TextView textView;
+    private static final int PERMISSION_FINE_LOCATION = 100;
+    TextView textView;
     FusedLocationProviderClient fusedLocationProviderClient;
     private SensorManager sensorManager;
     private final float[] accelerometerReading = new float[3];
@@ -51,6 +51,7 @@ TextView textView;
     private SensorManager mSensorManager;
 
     TextView tvHeading;
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -62,7 +63,8 @@ TextView textView;
         // In this example, the sensor reporting delay is small enough such that
         // the application receives an update before the system checks the sensor
         // readings again.
-        mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION),
+        mSensorManager.registerListener(this,
+                mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION),
                 SensorManager.SENSOR_DELAY_GAME);
     }
 
@@ -78,11 +80,11 @@ TextView textView;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
-        navigationView=findViewById(R.id.navigation);
+        navigationView = findViewById(R.id.navigation);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         image = (ImageView) findViewById(R.id.imageViewCompass);
-        toolbar=findViewById(R.id.toolbar);
-        tvHeading=findViewById(R.id.longi);
+        toolbar = findViewById(R.id.toolbar);
+        tvHeading = findViewById(R.id.longi);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,44 +92,44 @@ TextView textView;
             }
         });
         navigationView.setFrameRate(1000);
-        locationRequest=new LocationRequest();
+        locationRequest = new LocationRequest();
         locationRequest.setInterval(3000);
         locationRequest.setFastestInterval(3000);
         locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-        locationCallback=new LocationCallback(){
+        locationCallback = new LocationCallback() {
 
             @Override
             public void onLocationResult(LocationResult locationResult) {
                 super.onLocationResult(locationResult);
-                Location location=locationResult.getLastLocation();
+                Location location = locationResult.getLastLocation();
                 updateUIvalues(location);
             }
         };
 
 
-       // updateGps();
+        // updateGps();
         //startLocationUpdate();
 //navigationView.startAnimation();
     }
 
     private void updateUIvalues(Location location) {
 //navigationView.setLongitude(location.getLatitude());
-        tvHeading.setText(""+location.getLatitude());
-        Geocoder geocoder=new Geocoder(com.example.wifianalyzer.Navigation.this);
-        try{
-            List<Address> list= geocoder.getFromLocation(location.getLatitude(),location.getLongitude(),1);
-           // adresse.setText(""+list.get(0).getAddressLine(0));
+        tvHeading.setText("" + location.getLatitude());
+        Geocoder geocoder = new Geocoder(com.example.wifianalyzer.Navigation.this);
+        try {
+            List<Address> list = geocoder.getFromLocation(location.getLatitude(),
+                    location.getLongitude(), 1);
+            // adresse.setText(""+list.get(0).getAddressLine(0));
 
-        }
-        catch (Exception e){
-            Toast.makeText(com.example.wifianalyzer.Navigation.this,"DOESNT WORK!", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(com.example.wifianalyzer.Navigation.this, "DOESNT WORK!",
+                    Toast.LENGTH_SHORT).show();
         }
     }
 
 
-
     private void startLocationUpdate() {
-        fusedLocationProviderClient.requestLocationUpdates(locationRequest,locationCallback,null);
+        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, null);
         updateGps();
     }
 
@@ -135,19 +137,22 @@ TextView textView;
         fusedLocationProviderClient.removeLocationUpdates(locationCallback);
     }
 
-    private void updateGps(){
-        fusedLocationProviderClient= LocationServices.getFusedLocationProviderClient(com.example.wifianalyzer.Navigation.this);
-        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)== PackageManager.PERMISSION_GRANTED){
-            fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this,new OnSuccessListener<Location>() {
-                @Override
-                public void onSuccess(Location location) {
-                    updateUIvalues(location);
-                }
-            });
-        }
-        else {
-            if(Build.VERSION.SDK_INT> Build.VERSION_CODES.M){
-                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},PERMISSION_FINE_LOCATION);
+    private void updateGps() {
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(
+                com.example.wifianalyzer.Navigation.this);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this,
+                    new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            updateUIvalues(location);
+                        }
+                    });
+        } else {
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        PERMISSION_FINE_LOCATION);
             }
         }
     }
@@ -188,7 +193,7 @@ TextView textView;
         // "mRotationMatrix" now has up-to-date information.
 
         SensorManager.getOrientation(rotationMatrix, orientationAngles);
-Toast.makeText(this,""+orientationAngles[1], Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "" + orientationAngles[1], Toast.LENGTH_LONG).show();
         // "mOrientationAngles" now has up-to-date information..
     }
 

@@ -34,42 +34,52 @@ public class SpeedFragment extends Fragment {
     public static SpeedFragment newInstance() {
         return new SpeedFragment();
     }
-private FancyButton btn_start_speed;
-    List<SpeedTest_> speedTest_list=new ArrayList<SpeedTest_>();
-RecyclerView recyclerView;
-SpeedTestAdapter speedTestAdapter;
-    TextView namewifi,notest;
+
+    private FancyButton btn_start_speed;
+    List<SpeedTest_> speedTest_list = new ArrayList<SpeedTest_>();
+    RecyclerView recyclerView;
+    SpeedTestAdapter speedTestAdapter;
+    TextView namewifi, notest;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
 
-        View root= inflater.inflate(R.layout.speed_fragment, container, false);
+        View root = inflater.inflate(R.layout.speed_fragment, container, false);
 
-notest=root.findViewById(R.id.notest);
-        WifiManager wmgr = (WifiManager) getContext().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-      final String name= wmgr.getConnectionInfo().getSSID();
-        namewifi=root.findViewById(R.id.wifi_name);
-        recyclerView=root.findViewById(R.id.liste_tests);
+        notest = root.findViewById(R.id.notest);
+        WifiManager wmgr = (WifiManager) getContext().getApplicationContext().getSystemService(
+                Context.WIFI_SERVICE);
+        final String name = wmgr.getConnectionInfo().getSSID();
+        namewifi = root.findViewById(R.id.wifi_name);
+        recyclerView = root.findViewById(R.id.liste_tests);
         namewifi.setText(name);
-btn_start_speed=root.findViewById(R.id.btn_start_speed);
-btn_start_speed.setOnClickListener(v -> {
-    Intent intent=new Intent().setClass(getContext(), com.example.wifianalyzer.ui.MainActivity.class);
-    intent.putExtra("name_wifi",name);
-    startActivity(intent);
+        btn_start_speed = root.findViewById(R.id.btn_start_speed);
+        btn_start_speed.setOnClickListener(v -> {
+            Intent intent = new Intent().setClass(getContext(),
+                    com.example.wifianalyzer.ui.MainActivity.class);
+            intent.putExtra("name_wifi", name);
+            startActivity(intent);
 
-});
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
+        });
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         SQLiteDatabase database = new SampleSQLiteDBHelper(getContext()).getReadableDatabase();
         DBManager dbManager = new DBManager(getContext());
         dbManager.open();
-        database.execSQL("CREATE TABLE IF NOT EXISTS "+SampleSQLiteDBHelper.PERSON_TABLE_NAME+"("+SampleSQLiteDBHelper.PERSON_COLUMN_NAME+" VARCHAR,"+SampleSQLiteDBHelper.PERSON_COLUMN_D+" VARCHAR,Upload VARCHAR,"+SampleSQLiteDBHelper.PERSON_COLUMN_DATE+" VARCHAR);");
+        database.execSQL(
+                "CREATE TABLE IF NOT EXISTS " + SampleSQLiteDBHelper.PERSON_TABLE_NAME + "("
+                        + SampleSQLiteDBHelper.PERSON_COLUMN_NAME + " VARCHAR,"
+                        + SampleSQLiteDBHelper.PERSON_COLUMN_D + " VARCHAR,Upload VARCHAR,"
+                        + SampleSQLiteDBHelper.PERSON_COLUMN_DATE + " VARCHAR);");
 
-        Cursor cursor = database.rawQuery("Select * from "+SampleSQLiteDBHelper.PERSON_TABLE_NAME+" ",null);
+        Cursor cursor = database.rawQuery(
+                "Select * from " + SampleSQLiteDBHelper.PERSON_TABLE_NAME + " ", null);
 
-        Toast.makeText(getContext(), "The total cursor count is " + cursor.getCount(), Toast.LENGTH_LONG).show();
-        speedTest_list=new ArrayList<SpeedTest_>();
-        while(cursor.moveToNext()) {
+        Toast.makeText(getContext(), "The total cursor count is " + cursor.getCount(),
+                Toast.LENGTH_LONG).show();
+        speedTest_list = new ArrayList<SpeedTest_>();
+        while (cursor.moveToNext()) {
             int index;
 
             index = cursor.getColumnIndexOrThrow(SampleSQLiteDBHelper.PERSON_COLUMN_NAME);
@@ -82,24 +92,24 @@ btn_start_speed.setOnClickListener(v -> {
             String u = cursor.getString(index);
             index = cursor.getColumnIndexOrThrow(SampleSQLiteDBHelper.PERSON_COLUMN_DATE);
             String date = cursor.getString(index);
-            speedTest_list.add(new SpeedTest_(d,u,date,rname));
+            speedTest_list.add(new SpeedTest_(d, u, date, rname));
             //... do something with data
         }
-        speedTestAdapter= new SpeedTestAdapter(getContext(), speedTest_list);
+        speedTestAdapter = new SpeedTestAdapter(getContext(), speedTest_list);
 
         recyclerView.setLayoutManager(linearLayoutManager);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
+                recyclerView.getContext(),
                 linearLayoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
         recyclerView.setAdapter(speedTestAdapter);
-        if(cursor.getCount()!=0){
+        if (cursor.getCount() != 0) {
             recyclerView.setVisibility(View.VISIBLE);
             notest.setVisibility(View.GONE);
         }
-speedTestAdapter.notifyDataSetChanged();
-return root;
+        speedTestAdapter.notifyDataSetChanged();
+        return root;
     }
-
 
 
     @Override

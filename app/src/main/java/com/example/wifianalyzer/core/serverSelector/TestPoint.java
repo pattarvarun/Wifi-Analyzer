@@ -5,18 +5,19 @@ import org.json.JSONObject;
 
 public class TestPoint {
     private final String name, server, dlURL, ulURL, pingURL, getIpURL;
-    protected float ping=-1;
+    protected float ping = -1;
 
-    public TestPoint(String name, String server, String dlURL, String ulURL, String pingURL, String getIpURL){
-        this.name=name;
-        this.server=server;
-        this.dlURL=dlURL;
-        this.ulURL=ulURL;
-        this.pingURL=pingURL;
-        this.getIpURL=getIpURL;
+    public TestPoint(String name, String server, String dlURL, String ulURL, String pingURL,
+            String getIpURL) {
+        this.name = name;
+        this.server = server;
+        this.dlURL = dlURL;
+        this.ulURL = ulURL;
+        this.pingURL = pingURL;
+        this.getIpURL = getIpURL;
     }
 
-    public TestPoint(JSONObject json){
+    public TestPoint(JSONObject json) {
         try {
             name = json.getString("name");
             if (name == null) throw new IllegalArgumentException("Missing name field");
@@ -30,7 +31,7 @@ public class TestPoint {
             if (pingURL == null) throw new IllegalArgumentException("Missing pingURL field");
             getIpURL = json.getString("getIpURL");
             if (getIpURL == null) throw new IllegalArgumentException("Missing getIpURL field");
-        }catch (JSONException t){
+        } catch (JSONException t) {
             throw new IllegalArgumentException("Invalid JSON");
         }
     }

@@ -56,8 +56,10 @@ public class GetSpeedTestHostsHandler extends Thread {
                     if (!line.contains("isp=")) {
                         continue;
                     }
-                    selfLat = Double.parseDouble(line.split("lat=\"")[1].split(" ")[0].replace("\"", ""));
-                    selfLon = Double.parseDouble(line.split("lon=\"")[1].split(" ")[0].replace("\"", ""));
+                    selfLat = Double.parseDouble(line.split("lat=\"")[1].split(" ")[0].replace("\"",
+                            ""));
+                    selfLon = Double.parseDouble(line.split("lon=\"")[1].split(" ")[0].replace("\"",
+                            ""));
                     break;
                 }
 
