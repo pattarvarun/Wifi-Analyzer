@@ -1,8 +1,13 @@
 package com.example.wifianalyzer;
 
+import android.Manifest;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -27,8 +32,42 @@ public class Main extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
+        int permissionCheck = getApplicationContext().checkSelfPermission( Manifest.permission.ACCESS_FINE_LOCATION);
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            Log.d("MainActivity","PERMISSION not granted");
+            /*// User may have declined earlier, ask Android if we should show him a reason
+            if (shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)) {
+                // show an explanation to the user
+                // Good practise: don't block thread after the user sees the explanation, try again to request the permission.
+            } else {
+                // request the permission.
+                // CALLBACK_NUMBER is a integer constants
+
+                // The callback method gets the result of the request.
+            }*/
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        } else {
+
+        }
 
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+            @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
+                } else {
+                    requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+                }
+                break;
+            }
+        }
     }
 
     @Override

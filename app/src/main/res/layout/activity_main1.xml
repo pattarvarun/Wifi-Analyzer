@@ -338,7 +338,7 @@
                             android:layout_centerHorizontal="true"
                             android:textColor="@color/textColor" />
 
-                        <com.example.trackingwifi.ui.GaugeView
+                        <com.example.wifianalyzer.ui.GaugeView
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/gaugeSize"
                             android:id="@+id/dlGauge"
@@ -401,7 +401,7 @@
                             android:layout_centerHorizontal="true"
                             android:textColor="@color/textColor" />
 
-                        <com.example.trackingwifi.ui.GaugeView
+                        <com.example.wifianalyzer.ui.GaugeView
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/gaugeSize"
                             android:id="@+id/ulGauge"

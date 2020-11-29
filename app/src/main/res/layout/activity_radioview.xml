@@ -58,7 +58,7 @@
         android:visibility="gone"
         android:layout_height="match_parent" />
 
-    <com.example.trackingwifi.RadarView
+    <com.example.wifianalyzer.RadarView
         android:id="@+id/radarView"
         android:layout_width="398dp"
         android:layout_height="382dp"

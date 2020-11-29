@@ -1,18 +1,25 @@
 package com.example.wifianalyzer;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.net.wifi.p2p.WifiP2pManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -42,7 +49,7 @@ public class DeviceList extends Fragment implements WifiP2pManager.PeerListListe
     BroadcastReceiver receiver, mWifiScanReceiver;
     DeviceListAdapter deviceListAdapter;
     private List _peers = new ArrayList();
-    private BroadcastReceiver _broadcastReceiver = null;
+    private WiFiDirectBroadcastReceiver _broadcastReceiver = null;
 
     private WifiP2pManager.PeerListListener _peerListListener;
     // TODO: Rename parameter arguments, choose names that match
@@ -138,6 +145,37 @@ public class DeviceList extends Fragment implements WifiP2pManager.PeerListListe
 
         }
 
+        /*int permissionCheck = getActivity().checkSelfPermission( Manifest.permission.ACCESS_FINE_LOCATION);
+        if (!(permissionCheck == PackageManager.PERMISSION_GRANTED)) {
+            // User may have declined earlier, ask Android if we should show him a reason
+            if (shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)) {
+                // show an explanation to the user
+                // Good practise: don't block thread after the user sees the explanation, try again to request the permission.
+            } else {
+                // request the permission.
+                // CALLBACK_NUMBER is a integer constants
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+                // The callback method gets the result of the request.
+            }
+        } else {
+            managePeers();
+        }*/
+
+        managePeers();
+
+        deviceListAdapter = new DeviceListAdapter(getContext(), list);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
+                recyclerView.getContext(),
+                linearLayoutManager.getOrientation());
+        recyclerView.addItemDecoration(dividerItemDecoration);
+        recyclerView.setAdapter(deviceListAdapter);
+        List<WifiP2pDevice> peers = new ArrayList<WifiP2pDevice>();
+
+        return root;
+    }
+
+    @SuppressLint("MissingPermission")
+    public void managePeers(){
         manager.requestPeers(channel, new WifiP2pManager.PeerListListener() {
             @Override
             public void onPeersAvailable(WifiP2pDeviceList wifiP2pDeviceList) {
@@ -159,18 +197,6 @@ public class DeviceList extends Fragment implements WifiP2pManager.PeerListListe
                 }
             }
         });
-        //  Toast.makeText(getContext(), "jaja"+list.get(0).getDevice(),Toast.LENGTH_LONG).show();
-
-
-        deviceListAdapter = new DeviceListAdapter(getContext(), list);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
-                recyclerView.getContext(),
-                linearLayoutManager.getOrientation());
-        recyclerView.addItemDecoration(dividerItemDecoration);
-        recyclerView.setAdapter(deviceListAdapter);
-        List<WifiP2pDevice> peers = new ArrayList<WifiP2pDevice>();
-
-        return root;
     }
 
     @Override
@@ -196,5 +222,43 @@ public class DeviceList extends Fragment implements WifiP2pManager.PeerListListe
     @Override
     public void onChannelDisconnected() {
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+
+        Log.d("devicelist",requestCode+"!"+grantResults);
+        switch (requestCode) {
+            case 1: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    managePeers();
+                } else {
+                    //requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+                }
+                break;
+            }
+            case 2: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    _broadcastReceiver.discoverPeers();
+                } else {
+                    requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 2);
+                }
+                break;
+            }
+            case 3: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    _broadcastReceiver.requestPeers();
+                } else {
+                    requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 3);
+                }
+                break;
+            }
+
+            // other 'case' statements for other permssions
+        }
     }
 }
