@@ -109,7 +109,7 @@ public class Main extends AppCompatActivity {
 
                 switch (position) {
                     case 0:
-                        new com.example.wifianalyzer.Frag1();
+                        new Frag1();
                         break;
                     case 1:
                         new SpeedFragment();
@@ -161,7 +161,7 @@ public class Main extends AppCompatActivity {
         tabs.getTabAt(0).setIcon(tabIcons[0]);
         tabs.getTabAt(1).setIcon(tabIcons[1]);
         tabs.getTabAt(2).setIcon(tabIcons[2]);
-        tabs.getTabAt(3).setIcon(tabIcons[3]);
+        //tabs.getTabAt(3).setIcon(tabIcons[3]);
 
     }
 }

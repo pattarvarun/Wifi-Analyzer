@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private FancyButton button, btn_test;
     private int dmb, freq, tdistance, tchannel, twifi_speed;
     private String tname, Bssid, encry, addresse;
+    private BroadcastReceiver mWifiScanReceiver;
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     updateGps();
                 } else {
-                    Toast.makeText(this, "jaja", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Permission Not Granted", Toast.LENGTH_LONG).show();
                     finish();
                 }
 
@@ -146,12 +147,8 @@ public class MainActivity extends AppCompatActivity {
             tname = getIntent().getExtras().getString("wifi_name");
             toolbar.setTitle(tname);
             toolbar.setNavigationIcon(R.drawable.ic_action_back);
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //What to do on back clicked
-                    finish();
-                }
+            toolbar.setNavigationOnClickListener(v -> {
+                finish();
             });
             Bssid = getIntent().getExtras().getString("mac");
             encry = getIntent().getExtras().getString("encryption");
@@ -176,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
         final WifiManager mWifiManager = (WifiManager) getApplicationContext().getSystemService(
                 Context.WIFI_SERVICE);
 
-        final BroadcastReceiver mWifiScanReceiver = new BroadcastReceiver() {
+        mWifiScanReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context c, Intent intent) {
                 Toast.makeText(com.example.wifianalyzer.MainActivity.this, "kakaka",
@@ -291,7 +288,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean checkWifiOnAndConnected(String name) {
-        WifiManager wifiMgr = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+        WifiManager wifiMgr = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
         if (wifiMgr.isWifiEnabled()) { // Wi-Fi adapter is ON
 
@@ -325,6 +322,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        // unregisterReceiver(mWifiScanReceiver);
+        unregisterReceiver(mWifiScanReceiver);
     }
 }

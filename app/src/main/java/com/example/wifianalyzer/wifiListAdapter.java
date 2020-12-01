@@ -61,7 +61,7 @@ public class wifiListAdapter extends RecyclerView.Adapter<wifiListAdapter.ViewHo
 
         @Override
         public void onClick(View v) {
-            if (mClickListener != null) mClickListener.onItemClick(v, getAdapterPosition());
+            if (mClickListener != null) mClickListener.onItemClick(v, list.get(getAdapterPosition()));
 
         }
     }
@@ -72,6 +72,6 @@ public class wifiListAdapter extends RecyclerView.Adapter<wifiListAdapter.ViewHo
 
     // parent activity will implement this method to respond to click events
     public interface ItemClickListener {
-        void onItemClick(View view, int position);
+        void onItemClick(View view, WifiInfo_ info);
     }
 }

@@ -90,5 +90,21 @@ public class WifiInfo_ {
     public String getName() {
         return name;
     }
+
+    @Override
+    public String toString() {
+        return "WifiInfo_{" +
+                "dmb=" + dmb +
+                ", freq=" + freq +
+                ", distance=" + distance +
+                ", channel=" + channel +
+                ", wifi_speed=" + wifi_speed +
+                ", name='" + name + '\'' +
+                ", Bssid='" + Bssid + '\'' +
+                ", encry='" + encry + '\'' +
+                ", addresse='" + addresse + '\'' +
+                ", drawable=" + drawable +
+                '}';
+    }
 }
 

@@ -22,7 +22,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @StringRes
     private static final int[] TAB_TITLES =
-            new int[]{R.string.tab_text_1, R.string.tab_text_2, R.string.Channel, R.string.devices};
+            new int[]{R.string.tab_text_1, R.string.tab_text_2, R.string.Channel, /*R.string.devices*/};
     private final Context mContext;
     public Fragment[] fragments = new Fragment[TAB_TITLES.length];
 

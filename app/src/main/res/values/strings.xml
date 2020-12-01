@@ -42,13 +42,13 @@
     </string>
     <string name="app_name">Wifi-Analyzer NITK</string>
     <string name="title_activity_tab_activity">tab_activity</string>
-    <string name="tab_text_1">Wifi Radar</string>
-    <string name="tab_text_2">More informations</string>
+    <string name="tab_text_1">Radar</string>
+    <string name="tab_text_2">Testing</string>
     <string name="title_activity_main">Main</string>
     <string name="Settings">Wifi Channels</string>
     <string name="Channels">Wifi Channels</string>
     <string name="speed">Speed information</string>
-    <string name="Channel">Wifi channels</string>
+    <string name="Channel">Channels</string>
     <string name="title_activity_speed_test">SpeedTest</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>

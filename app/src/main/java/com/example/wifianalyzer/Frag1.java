@@ -10,6 +10,7 @@ import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -67,11 +68,11 @@ public class Frag1 extends Fragment implements wifiListAdapter.ItemClickListener
     private static int[] imageIconDatabase = {
             R.drawable.list,
             R.drawable.ic_track_changes_black_48dp,
-            R.drawable.ic_navigation_black_48dp
+            /*R.drawable.ic_navigation_black_48dp*/
 
     };
     // stores the image database names
-    private String[] imageNameDatabase = {"Liste", "Radar", "Navigation"};
+    private String[] imageNameDatabase = {"List", "Radar", /*"Navigation"*/};
     List<WifiInfo_> wifiInfoList1 = new ArrayList<WifiInfo_>();
     List<WifiInfo_> wifiInfoList2 = new ArrayList<WifiInfo_>();
     private final static ArrayList<Integer> channelsFrequency = new ArrayList<Integer>(
@@ -105,10 +106,10 @@ public class Frag1 extends Fragment implements wifiListAdapter.ItemClickListener
                         wifiListAdapter = new wifiListAdapter(getContext(), wifiInfoList1);
                         wifiListAdapter.setClickListener(
                                 com.example.wifianalyzer.Frag1.this::onItemClick);
-                        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
+                        /*DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
                                 recyclerView.getContext(),
                                 linearLayoutManager.getOrientation());
-                        recyclerView.addItemDecoration(dividerItemDecoration);
+                        recyclerView.addItemDecoration(dividerItemDecoration);*/
                         recyclerView.setAdapter(wifiListAdapter);
                         linearLayout.setVisibility(View.GONE);
                         break;
@@ -318,8 +319,10 @@ public class Frag1 extends Fragment implements wifiListAdapter.ItemClickListener
     }
 
     @Override
-    public void onItemClick(View view, int position) {
-        WifiInfo_ wifiInfo_ = wifiInfoList2.get(position);
+    public void onItemClick(View view, WifiInfo_ wifiInfo_) {
+
+        //WifiInfo_ wifiInfo_ = wifiInfoList2.get(position);
+        Log.d("Frag1, item click",wifiInfo_.toString());
         Intent intent = new Intent().setClass(getContext(), MainActivity.class);
         intent.putExtra("wifi_name", wifiInfo_.getName());
         intent.putExtra("mac", wifiInfo_.getBssid());
