@@ -10,6 +10,9 @@
 - [] Option to toggle between 2.4GHz and 5 GHz band.
 
 
+### Screenshots
+<img src="Screenshots/1.jpg" width="200">  <img src="Screenshots/2.jpg" width="200">  <img src="Screenshots/3.jpg" width="200">  <img src="Screenshots/4.jpg" width="200">
+
 
 ### Team Members
 
