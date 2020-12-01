@@ -22,7 +22,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @StringRes
     private static final int[] TAB_TITLES =
-            new int[]{R.string.tab_text_1, R.string.tab_text_2, R.string.Channel, /*R.string.devices*/};
+            new int[]{R.string.tab_text_1, /*R.string.tab_text_2,*/ R.string.Channel, /*R.string.devices*/};
     private final Context mContext;
     public Fragment[] fragments = new Fragment[TAB_TITLES.length];
 
@@ -47,15 +47,15 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 fragment = new Frag1();
                 break;
-            case 1:
+           /* case 1:
                 fragment = new SpeedFragment();
-                break;
-            case 2:
+                break;*/
+            case 1:
                 fragment = new Frag2Fragment();
                 break;
-            case 3:
+            /*case 3:
                 fragment = new DeviceList();
-                break;
+                break;*/
             default:
                 return null;
         }

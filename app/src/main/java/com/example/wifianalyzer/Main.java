@@ -111,15 +111,15 @@ public class Main extends AppCompatActivity {
                     case 0:
                         new Frag1();
                         break;
-                    case 1:
+                    /*case 1:
                         new SpeedFragment();
-                        break;
-                    case 2:
+                        break;*/
+                    case 1:
                         new Frag2Fragment();
                         break;
-                    case 3:
+                    /*case 3:
                         new DeviceList();
-                        break;
+                        break;*/
 
                 }
             }
@@ -159,8 +159,8 @@ public class Main extends AppCompatActivity {
 
     private void setupTabIcons() {
         tabs.getTabAt(0).setIcon(tabIcons[0]);
-        tabs.getTabAt(1).setIcon(tabIcons[1]);
-        tabs.getTabAt(2).setIcon(tabIcons[2]);
+        /*tabs.getTabAt(1).setIcon(tabIcons[1]);*/
+        tabs.getTabAt(1).setIcon(tabIcons[2]);
         //tabs.getTabAt(3).setIcon(tabIcons[3]);
 
     }
